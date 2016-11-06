@@ -1,0 +1,33 @@
+---
+title: "MPP-E1180: Collaborative Social Data Analysis Assignment 3"
+author: "Camila Vieira & Tarun Khanna"
+date: "11 November 2016"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+pkgs <- c('dplyr', 'ggplot2')
+```
+
+## Data
+
+-GDP per capita (constant 2010 US$)
+
+
+
+
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
