@@ -1,0 +1,104 @@
+library(rvest)
+library(dplyr)
+library(RJSONIO)
+library(WDI)
+
+#Independent variables
+
+#1. GDP per capita in constant 2000 US dollars - from 2000 until 2015 in EU-28
+
+## Searching and downloading data
+WDIsearch('gdp.*capita.*constant')
+dat = WDI(indicator="NY.GDP.PCAP.KD", country=c('AT','BE','BG','HR','CY',
+                                                'CZ','DK','EE','FI','FR',
+                                                'DE','GR','HU','IE','IT','LV',
+                                                'LT','LU','MT','NL','PL',
+                                                'PT','RO','SK','SI','ES','SE',
+                                                'GB'), start=2000, end=2015)
+
+## Tidying Data
+dim(dat)
+head(dat)[,1:4]
+dat_GDP <- arrange(dat, country, year)
+dat_GDP <- rename(dat_GDP, year = year, GDP_capita = NY.GDP.PCAP.KD)
+dat_GDP <- select(dat_GDP, iso2c, country, year, GDP_capita)
+
+## Identifying and removing missing values
+summary(dat_GDP$GDP_capita)
+dat_GDP <- subset(x = dat_GDP,!is.na(GDP_capita))
+summary(dat_GDP$GDP_capita)
+
+
+#2. Tax on Business
+
+## Searching and downloading dataData available
+WDIsearch('IC.TAX.PRFT.CP.ZS', field = 'indicator', cache = NULL)
+
+## Data available only from 2013 onwards
+dat = WDI(indicator="IC.TAX.PRFT.CP.ZS", country=c('AT','BE','BG','HR','CY',
+                                                   'CZ','DK','EE','FI','FR',
+                                                   'DE','GR','HU','IE','IT','LV',
+                                                   'LT','LU','MT','NL','PL',
+                                                   'PT','RO','SK','SI','ES','SE',
+                                                   'GB'), start=2000, end=2015)
+## Tyding Data
+
+head(dat)[,1:4]
+business_tax <-arrange(dat, country, year)
+business_tax <-rename(business_tax, year = year, profit_tax = IC.TAX.PRFT.CP.ZS)
+business_tax <- select(business_tax, iso2c, country, year, profit_tax)
+head(business_tax)
+
+## Identifying and removing missing values
+summary(business_tax$profit_tax)
+business_tax <- subset (x = business_tax,!is.na(profit_tax))
+summary(business_tax$profit_tax)
+## NA Removed: Data available only from 2013 onwards.
+
+
+#3. Energy imports, net (% of energy use)
+
+WDIsearch('EG.IMP.CONS.ZS', field ='indicator', cache = NULL)
+dat = WDI(indicator='EG.IMP.CONS.ZS', country=c('AT','BE','BG','HR','CY',
+                                                'CZ','DK','EE','FI','FR',
+                                                'DE','GR','HU','IE','IT','LV',
+                                                'LT','LU','MT','NL','PL',
+                                                'PT','RO','SK','SI','ES','SE',
+                                                'GB'), start=2000, end=2015)
+
+## Tyding Data
+head(dat)
+energy_imp <- arrange(dat, country, year)
+energy_imp <- rename(energy_imp, year = year, netenergy_imports = EG.IMP.CONS.ZS)
+energy_imp <- select(energy_imp, iso2c, country, year, netenergy_imports)
+head(energy_imp)
+
+## Identifying and removing missing values
+summary(energy_imp$netenergy_imports)
+energy_imp <- subset(x = energy_imp,!is.na(netenergy_imports))
+summary(energy_imp$netenergy_imports)
+
+
+#4. Use of Fossil Fuel
+WDIsearch('EG.USE.COMM.FO.ZS', field ='indicator', cache = NULL)
+dat = WDI(indicator='EG.USE.COMM.FO.ZS', country=c('AT','BE','BG','HR','CY',
+                                                   'CZ','DK','EE','FI','FR',
+                                                   'DE','GR','HU','IE','IT','LV',
+                                                   'LT','LU','MT','NL','PL',
+                                                   'PT','RO','SK','SI','ES','SE',
+                                                   'GB'), start=2000, end=2015)
+## Tyding Data
+head(dat)
+fossilfuel <- arrange (dat, country, year)
+fossilfuel <- rename(fossilfuel, year = year, fossil_use = EG.USE.COMM.FO.ZS)
+head(fossilfuel)
+fossilfuel <- select(fossilfuel, iso2c, country, year, fossil_use)
+head(fossilfuel)
+
+## Identifying and removing missing values
+summary(fossilfuel$fossil_use)
+fossilfuel <- subset(x = fossilfuel,!is.na(fossil_use))
+summary(fossilfuel$fossil_use)
+# NA Removed : There is no data for 2015 for EU-28 countries. 
+
+
