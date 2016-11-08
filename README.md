@@ -15,7 +15,8 @@ and the steps taken in gathering, cleaning, and applying descriptive statistics 
 
 ###Documents in the repository
 
-In addition to this README, one may find the following files in the repository:
+In addition to this README, one may find the following folders and files in the repository:
 
+- ....
 - [Assignment03.pdf](https://github.com/Camila-RV/VieiraKhanna_Assignment3/blob/master/Assignment03.pdf)
 - [Assignment03.Rmd](https://github.com/Camila-RV/VieiraKhanna_Assignment3/blob/master/Assignment03.Rmd)- a markdown document with brief description of the results of the analysis, including dynamically generated tables and figures. 
