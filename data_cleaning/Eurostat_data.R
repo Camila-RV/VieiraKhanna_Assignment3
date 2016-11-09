@@ -30,7 +30,9 @@ head(energy_patent)
 #create new column for country codes + adjusting order of columns
 energy_patent["iso2c"] <- ""
 energy_patent <- select(energy_patent, iso2c, GEO, TIME, Value)
+energy_patent <- rename(energy_patent, year = TIME, country = GEO)
 head(energy_patent)
+
 
 #matching country names to codes
 cnames <- c('Austria','Belgium','Bulgaria','Croatia','Cyprus',
@@ -42,9 +44,9 @@ cnames <- c('Austria','Belgium','Bulgaria','Croatia','Cyprus',
 
 countrycode(cnames, "country.name", "iso2c") 
 
-energy_patent["iso2c"] <- 
 
 
+        
 wiki <- "https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2"
 
 energy_patent <- readHTMLTable(wiki, header=TRUE, which=3, stringAsFactors=FALSE)[1:2]
@@ -55,20 +57,15 @@ head(energy_patent)
         
 
 
-iso2c <- 
 
 
 
-energy_patent$iso2c <- if (iso2c == "country.name")
-
-energy_patent$iso2c <- countrycode
+energy_patent <- if ("iso2c" == "country.name")
 
 energy_patent$iso2c[match(codes, energy_patent$"GEO")]
 head(energy_patent)
 
-energy_patent$iso2c <- if(codes == "GEO")
-        head(energy_patent)
-countrycode(energy_patent,energy_patent$GEO,energy_patent$iso2c)
+
                   
 
 #6. Long term interest rates (10 year bonf yields) 
