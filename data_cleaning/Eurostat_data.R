@@ -71,4 +71,22 @@ energy_patent$iso2c <- if(codes == "GEO")
 countrycode(energy_patent,energy_patent$GEO,energy_patent$iso2c)
                   
 
+#6. Long term interest rates (10 year bonf yields) 
+
+interest_rates <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/interest_rates_eu')
+
+#select the necessary columns
+head(interest_rates)
+interest_rates <- select(interest_rates, GEO, TIME, Value)
+head(energy_patent)
+
+#treat value column as numeric + clean missing values
+interest_rates[,3] <- as.numeric(interest_rates[,3])
+summary(interest_rates$Value)
+#interest_rates <- subset(x = interest_rates,!is.na(Value))
+#summary(interest_rates)
+
+
+
+
 
