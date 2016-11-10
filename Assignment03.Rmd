@@ -10,9 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 pkgs <- c('dplyr', 'ggplot2')
 ```
 
-## Collected Indicators and Hypotheses
+# Collected Indicators and Hypotheses
 
-#Source 1: World Bank - World Development Indicators 
+##Source 1: World Bank - World Development Indicators 
 
 *GDP per capita (constant 2000 US$)*
 
@@ -23,7 +23,7 @@ Hypothesis: Economic growth and income have an important and positive impact on 
 ((((- Profit tax (% of commercial profits)
 Definition: Profit tax is the amount of taxes on profits paid by the business.
 Hypothesis: Increases of taxes on business may negatively impact companies capital margin for investing in installation capacity of renewable energy sources.)))) 
->>>>>>> origin/master
+
   
 *Energy imports, net (% of energy use)*
 
@@ -36,7 +36,7 @@ We expect that a lower energy imports value increases the likelihood of countrie
 Definition: Use of energy from fossil fuel as a percent of total energy use. Fossil fuel comprises coal, oil, petroleum, and natural gas products.
 Hypothesis: The greater the percentage of energy consumption is the lower will be the incentives for developing installation capacity of renewable energy sources through new investments. ))))
 
-#Source 2: Eurostat
+##Source 2: Eurostat
 
 *Innovation in Renewable Energy*
 
@@ -55,7 +55,7 @@ Hypothesis:  Higher interest rates imply that business will have less incentives
 Definition: Electricity generated from renewable energy sources is measured as the percent of gross electricity consumption in the EU-28 countries. It stands for the the ratio between the electricity produced from renewable energy sources and the gross national electricity consumption within a given year. 
 This is the variable over which we build our study on green investments. Electricity generation from wind and solar power energy sources is used as a proxy for renewable energy investments and we expect to verify the effects of the factors presented in this section onto green investments. 
 
-#Source 3: OPEC
+##Source 3: OPEC
 
 *Crude oil prices*
 
@@ -65,11 +65,11 @@ The benchmark for crude oil price is the OPEC Reference Basket. This basket repr
 Hypothesis: Crude oil prices can be used as proxy for the demand of energy from fossil fuels. One can assume that a higher demand for fossil fuel is negatively correlated with investments in renewable energy sources and changes in prices may reveal trends in energy production and consumption. In this sense, we hypothesize that a higher price in crude oil means higher demand, or at least, scarcer availiability of fossil fuels, and therefore, it may have a negative effect in investments in renewable energy sources. 
 
 
-## Statistical Analysis
+# Statistical Analysis
 
 
 
-### 
+
 
 ```{r cars}
 knitr::opts_chunk$set(echo = TRUE)
