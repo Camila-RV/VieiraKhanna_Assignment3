@@ -103,4 +103,9 @@ summary(fossilfuel$fossil_use)
 summary(fossilfuel$fossil_use)
 # NA Removed : There is no data for 2015 for EU-28 countries. 
 
+Combined_WDI <- merge(dat_GDP, energy_imp, by = c('iso2c', 'year'), all.x = T, all.y = T)
+Combined_WDI <- merge(Combined_WDI, fossilfuel, by = c('iso2c', 'year'), all.x = T, all.y = T)
+Combined_WDI <- select(Combined_WDI, year, country, GDP_capita, netenergy_imports, fossil_use)
+
+rm(list = c("fossilfuel", "energy_imp", "business_tax", "dat_GDP","dat"))
 
