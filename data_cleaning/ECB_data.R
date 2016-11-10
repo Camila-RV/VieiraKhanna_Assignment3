@@ -7,6 +7,9 @@ library(rvest)
 library(dplyr)
 
 #8. Long-term interest rate 10 yr maturity 
+
+Long_ir <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/longterm_interestrate.csv')
+
 key <- "IRS.M..L.L40.CI.0000.EUR.N.Z"
 Long_ir <- get_data(key, filter = list(startPeriod = "2000", 
                                        endPeriod = "2015"))
