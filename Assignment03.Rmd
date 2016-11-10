@@ -12,22 +12,17 @@ pkgs <- c('dplyr', 'ggplot2')
 
 ## Collected Indicators and Hypotheses
 
-Source 1: WDI
+Source 1: World Bank - World Development Indicators 
+
 - GDP per capita (constant 2000 US$)
 Definition: Gross domestic product divided by midyear population.
-Hypothesis: Economic growth and income have an important and positive impact on green investment.  They generate a higher demand for energy and clean air as well as higher economic means for adopting new technologies.
-
-- Profit tax (% of commercial profits)
-Definition: Profit tax is the amount of taxes on profits paid by the business.
-Hypothesis: Increases of taxes on business may negatively impact companies capital margin for investing in installation capacity of renewable energy sources. 
+Hypothesis: Economic growth and income have an important and positive impact on green investment.  They generate a higher demand for energy and clean air. /// as well as higher economic means for adopting new technologies - However, this interpretation is based on GDP only, right?////
   
 - Energy imports, net (% of energy use)
 Definition: Net energy imports are estimated as energy use less production, both measured in oil equivalents. Energy use refers to use of primary energy before transformation to other end-use fuels, which is equal to indigenous production plus imports and stock changes, minus exports and fuels supplied to ships and aircraft engaged in international transport.
 
-Hypothesis: The energy imports indicator may allows us to verify whether countries have reduced dependence on energy sources from other countries by investing in renewable installations.
-We expect that a lower energy imports value increases the likelihood of countries investing in the installation of renewable energy sources. 
-  
-  /// If a country presents a negative value it indicates that the country is a net exporter. ->> How to address this point? ///
+-Hypothesis: The energy imports indicator may allows us to verify whether countries have reduced dependence on energy sources from other countries by investing in renewable installations.
+We expect that a lower energy imports value increases the likelihood of countries investing in the installation of renewable energy sources. /// If a country presents a negative value it indicates that the country is a net exporter. ->> How to address this point? ///
 
 - Fossil fuel energy consumption (% of total)
 Definition: Use of energy from fossil fuel as a percent of total energy use. Fossil fuel comprises coal, oil, petroleum, and natural gas products.
@@ -39,16 +34,33 @@ Source 2: Eurostat
 Definition: Number of patents filed for renewable energy/climate mitigation country wise. It comprises energy technologies patent applications submitted to the European Patent Office.
 Hypothesis: The number of patent applications in renewable energy is used as a proxy for innovation levels having a positive impact on investments in renewable resources. 
 
-Source 3: European Central Bank
-
 - Long-term interest rate (10 ys. maturity)
-Definition:
+Definition: Interest rates affect the capital available for investment. Changes in interest rates may impact costs related to access to finance as well as the return on investments. As the realisation of investments especially those related to infrastructure occurs in the long-run, a ten-year maturity interest rate is used in this analysis.  
+The indicator chosen for this study is the Maastricht criterion bond yields which is used as a convergence criterion for EMU for long-term interest rates (central government bond yields on the secondary market, gross of tax, with around 10 years' residual maturity).
+Hypothesis:  Higher interest rates imply that business will have less incentives to invest in renewable sources whereas lower interest rates foster long-term investments. In addition, higher interest rates may also increase the costs associated with the generation of electricity from renewable energy sources. 
 
-Hypothesis:
+- Electricity from renewable energy sources
+Definition: Electricity generated from renewable energy sources is measured as the percent of gross electricity consumption in the EU-28 countries. It stands for the the ratio between the electricity produced from renewable energy sources and the gross national electricity consumption within a given year. 
+This is the variable over which we build our study on green investments. Electricity generation from wind and solar power energy sources is used as a proxy for renewable energy investments and we expect to verify the effects of the factors presented in this section onto green investments. 
 
+Source 3: OPEC
+
+- Crude oil prices
+Definition: Crude oil prices represent annual averages of selected OPEC crude oils (OPEC basket).
+The benchmark for crude oil price is the OPEC Reference Basket. This basket represents the average of prices of petroleum blends produced by OPEC members. Some of these oil blends include, for example, the Saharan Blend from Algeria, Arab Light from Saudi Arabia, BCF 17 from Venezuela, et cetera. OPEC tries to keep the price between given maxima and minima by increasing and decreasing its oil production. 
+
+Hypothesis: Crude oil prices can be used as proxy for the demand of energy from fossil fuels. One can assume that a higher demand for fossil fuel is negatively correlated with investments in renewable energy sources and changes in prices may reveal trends in energy production and consumption. In this sense, we hypothesize that a higher price in crude oil means higher demand, or at least, scarcer availiability of fossil fuels, and therefore, it may have a negative effect in investments in renewable energy sources. 
+
+
+## Statistical Analysis
+
+
+
+
+### 
 
 ```{r cars}
-summary(cars)
+
 ```
 
 
