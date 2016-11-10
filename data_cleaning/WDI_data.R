@@ -5,6 +5,8 @@ library(WDI)
 
 #Independent variables
 
+#Source: World Bank - World Development Indicators
+
 #1. GDP per capita in constant 2000 US dollars - from 2000 until 2015 in EU-28
 
 ## Searching and downloading data
