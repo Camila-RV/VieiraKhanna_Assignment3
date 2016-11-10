@@ -1,4 +1,4 @@
----
+sinterest_rates <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/interest_rates_eu.csv')---
 title: "MPP-E1180: Collaborative Social Data Analysis Assignment 3"
 author: "Camila Vieira & Tarun Khanna"
 date: "11 November 2016"
@@ -17,9 +17,9 @@ Source 1: WDI
 Definition: Gross domestic product divided by midyear population.
 Hypothesis: Economic growth and income have an important and positive impact on green investment.  They generate a higher demand for energy and clean air as well as higher economic means for adopting new technologies.
 
-- Profit tax (% of commercial profits)
+((((- Profit tax (% of commercial profits)
 Definition: Profit tax is the amount of taxes on profits paid by the business.
-Hypothesis: Increases of taxes on business may negatively impact companies capital margin for investing in installation capacity of renewable energy sources. 
+Hypothesis: Increases of taxes on business may negatively impact companies capital margin for investing in installation capacity of renewable energy sources.)))) 
   
 - Energy imports, net (% of energy use)
 Definition: Net energy imports are estimated as energy use less production, both measured in oil equivalents. Energy use refers to use of primary energy before transformation to other end-use fuels, which is equal to indigenous production plus imports and stock changes, minus exports and fuels supplied to ships and aircraft engaged in international transport.
@@ -29,9 +29,9 @@ We expect that a lower energy imports value increases the likelihood of countrie
   
   /// If a country presents a negative value it indicates that the country is a net exporter. ->> How to address this point? ///
 
-- Fossil fuel energy consumption (% of total)
+(((- Fossil fuel energy consumption (% of total)
 Definition: Use of energy from fossil fuel as a percent of total energy use. Fossil fuel comprises coal, oil, petroleum, and natural gas products.
-Hypothesis: The greater the percentage of energy consumption is the lower will be the incentives for developing installation capacity of renewable energy sources through new investments. 
+Hypothesis: The greater the percentage of energy consumption is the lower will be the incentives for developing installation capacity of renewable energy sources through new investments. ))))
 
 Source 2: Eurostat
 
@@ -46,15 +46,25 @@ Definition:
 
 Hypothesis:
 
+- Oil Price
+
 
 ```{r cars}
-summary(cars)
+
+source('Eurostat_data.R')
+source('WDI_data.R')
+data <- merge(Combined_WDI,Combine_EuroStat,by = c("country", "year"), all.x = T)
+
+
+
 ```
 
 
 
 ```{r pressure, echo=FALSE}
-plot(pressure)
+
+
+
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
