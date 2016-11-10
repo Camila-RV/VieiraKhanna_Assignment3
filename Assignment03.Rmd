@@ -19,11 +19,6 @@ pkgs <- c('dplyr', 'ggplot2')
 Definition: Gross domestic product divided by midyear population.
 Hypothesis: Economic growth and income have an important and positive impact on green investment.  They generate a higher demand for energy and clean air. /// as well as higher economic means for adopting new technologies - However, this interpretation is based on GDP only, right?////
 
-
-((((- Profit tax (% of commercial profits)
-Definition: Profit tax is the amount of taxes on profits paid by the business.
-Hypothesis: Increases of taxes on business may negatively impact companies capital margin for investing in installation capacity of renewable energy sources.)))) 
-
   
 *Energy imports, net (% of energy use)*
 
@@ -32,9 +27,11 @@ Definition: Net energy imports are estimated as energy use less production, both
 Hypothesis: The energy imports indicator may allows us to verify whether countries have reduced dependence on energy sources from other countries by investing in renewable installations.
 We expect that a lower energy imports value increases the likelihood of countries investing in the installation of renewable energy sources. /// If a country presents a negative value it indicates that the country is a net exporter. ->> How to address this point? ///
 
-(((- Fossil fuel energy consumption (% of total)
+*Fossil fuel energy consumption (% of total*
+
 Definition: Use of energy from fossil fuel as a percent of total energy use. Fossil fuel comprises coal, oil, petroleum, and natural gas products.
-Hypothesis: The greater the percentage of energy consumption is the lower will be the incentives for developing installation capacity of renewable energy sources through new investments. ))))
+
+Hypothesis: The greater the percentage of energy consumption is the lower will be the incentives for developing installation capacity of renewable energy sources through new investments.
 
 ##Source 2: Eurostat
 
