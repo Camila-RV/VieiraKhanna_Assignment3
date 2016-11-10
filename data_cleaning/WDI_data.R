@@ -16,7 +16,7 @@ dat = WDI(indicator="NY.GDP.PCAP.KD", country=c('AT','BE','BG','HR','CY',
                                                 'PT','RO','SK','SI','ES','SE',
                                                 'GB'), start=2000, end=2015)
 
-## Tidying Data
+## Cleaning Data
 dim(dat)
 head(dat)[,1:4]
 dat_GDP <- arrange(dat, country, year)
@@ -41,7 +41,7 @@ dat = WDI(indicator="IC.TAX.PRFT.CP.ZS", country=c('AT','BE','BG','HR','CY',
                                                    'LT','LU','MT','NL','PL',
                                                    'PT','RO','SK','SI','ES','SE',
                                                    'GB'), start=2000, end=2015)
-## Tyding Data
+## Cleaning Data
 
 head(dat)[,1:4]
 business_tax <-arrange(dat, country, year)
@@ -66,7 +66,7 @@ dat = WDI(indicator='EG.IMP.CONS.ZS', country=c('AT','BE','BG','HR','CY',
                                                 'PT','RO','SK','SI','ES','SE',
                                                 'GB'), start=2000, end=2015)
 
-## Tyding Data
+## Cleaning Data
 head(dat)
 energy_imp <- arrange(dat, country, year)
 energy_imp <- rename(energy_imp, year = year, netenergy_imports = EG.IMP.CONS.ZS)
@@ -87,7 +87,7 @@ dat = WDI(indicator='EG.USE.COMM.FO.ZS', country=c('AT','BE','BG','HR','CY',
                                                    'LT','LU','MT','NL','PL',
                                                    'PT','RO','SK','SI','ES','SE',
                                                    'GB'), start=2000, end=2015)
-## Tyding Data
+## Cleaning Data
 head(dat)
 fossilfuel <- arrange (dat, country, year)
 fossilfuel <- rename(fossilfuel, year = year, fossil_use = EG.USE.COMM.FO.ZS)
