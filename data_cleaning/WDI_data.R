@@ -25,7 +25,7 @@ dat_GDP <- select(dat_GDP, iso2c, country, year, GDP_capita)
 
 ## Identifying and removing missing values
 summary(dat_GDP$GDP_capita)
-dat_GDP <- subset(x = dat_GDP,!is.na(GDP_capita))
+#dat_GDP <- subset(x = dat_GDP,!is.na(GDP_capita))
 summary(dat_GDP$GDP_capita)
 
 
@@ -51,7 +51,7 @@ head(business_tax)
 
 ## Identifying and removing missing values
 summary(business_tax$profit_tax)
-business_tax <- subset (x = business_tax,!is.na(profit_tax))
+#business_tax <- subset (x = business_tax,!is.na(profit_tax))
 summary(business_tax$profit_tax)
 ## NA Removed: Data available only from 2013 onwards.
 
@@ -75,7 +75,7 @@ head(energy_imp)
 
 ## Identifying and removing missing values
 summary(energy_imp$netenergy_imports)
-energy_imp <- subset(x = energy_imp,!is.na(netenergy_imports))
+#energy_imp <- subset(x = energy_imp,!is.na(netenergy_imports))
 summary(energy_imp$netenergy_imports)
 
 
@@ -97,7 +97,7 @@ head(fossilfuel)
 
 ## Identifying and removing missing values
 summary(fossilfuel$fossil_use)
-fossilfuel <- subset(x = fossilfuel,!is.na(fossil_use))
+#fossilfuel <- subset(x = fossilfuel,!is.na(fossil_use))
 summary(fossilfuel$fossil_use)
 # NA Removed : There is no data for 2015 for EU-28 countries. 
 

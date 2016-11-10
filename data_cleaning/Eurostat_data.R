@@ -19,8 +19,8 @@ head(energy_patent)
 #treat value column as numeric + clean missing values
 energy_patent[,3] <- as.numeric(energy_patent[,3])
 summary(energy_patent$Value)
-energy_patent <- subset(x = energy_patent,!is.na(Value))
-summary(energy_patent)
+#energy_patent <- subset(x = energy_patent,!is.na(Value))
+#summary(energy_patent)
 
 #arranging data - ascending
 head(energy_patent)
@@ -55,6 +55,15 @@ oil_price <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_As
 #treat value column as numeric + clean missing values
 oil_price[,2] <- as.numeric(oil_price[,2])
 summary(oil_price $Value)
+
+#8. Installed Renewable Energy Capacity
+
+installed_capacity <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/InstalledCapacity.csv')
+#treat value column as numeric + clean missing values
+installed_capacity[,2] <- as.numeric(oil_price[,2])
+summary(oil_price $Value)
+
+
 
 
 
