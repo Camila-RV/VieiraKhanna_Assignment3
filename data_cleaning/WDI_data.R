@@ -3,7 +3,7 @@ library(dplyr)
 library(RJSONIO)
 library(WDI)
 
-#Independent variables
+#INDEPENDENT VARIABLES
 
 #Source: World Bank - World Development Indicators
 
