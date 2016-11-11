@@ -3,6 +3,9 @@ title: "MPP-E1180: Collaborative Social Data Analysis Assignment 3"
 author: "Camila Vieira & Tarun Khanna"
 date: "11 November 2016"
 output: pdf_document
+bibliography: 
+        - bibliography.bib
+        - RpackageCitations.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -10,7 +13,9 @@ knitr::opts_chunk$set(echo = TRUE)
 pkgs <- c('dplyr', 'ggplot2')
 ```
 
-#Determinants of Renewable Energy Investments - An EU Cross-Country Analysis
+#Determinants of Renewable Energy Investments:
+
+#An EU Cross-Country Analysis
 
 ## Introduction
 
@@ -46,8 +51,8 @@ Hypothesis: GDP per capita has an important and positive impact on green investm
 
 Definition: Net energy imports are estimated as energy use less production, both measured in oil equivalents. Energy use refers to use of primary energy before transformation to other end-use fuels, which is equal to indigenous production plus imports and stock changes, minus exports and fuels supplied to ships and aircraft engaged in international transport.
 
-Hypothesis: The energy imports indicator may allows us to verify whether countries have reduced dependence on energy sources from other countries by producing more electricity through its own sources.
-We expect that a lower energy imports value increases the likelihood of countries to be using electricity generated locally via wind and solar energy sources. /// If a country presents a negative value it indicates that the country is a net exporter./////
+Hypothesis: The energy imports indicator may allows us to verify whether countries have reduced dependence on energy sources from other countries by producing more electricity through its own sources. However, if a country presents a negative value it indicates that the country is a net exporter.
+We expect that a lower energy imports value across increases the likelihood of countries to be using electricity generated locally via wind and solar energy sources. 
 
 *Fossil fuel energy consumption (% of total)*
 
@@ -88,8 +93,6 @@ Hypothesis: Crude oil prices can be used as proxy for the demand of energy from 
 
 
 
-
-
 ```{r cars}
 knitr::opts_chunk$set(echo = TRUE)
 
@@ -99,12 +102,15 @@ source('WDI_data.R')
 re_data <- merge(Combined_WDI,Combine_EuroStat,by = c("country", "year"), all.x = T, all.y = T)
 re_data1 <- na.omit(re_data)
 
-
 ```
 
 
-```{r pressure, echo=FALSE}
 
 
-```
+
+##References
+
+@R-dplyr and @CiteR works on R Programming were used as reference for this research proposal.
+
+[^KEY]: This is a footnote.
 
