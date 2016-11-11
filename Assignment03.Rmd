@@ -3,9 +3,6 @@ title: "MPP-E1180: Collaborative Social Data Analysis Assignment 3"
 author: "Camila Vieira & Tarun Khanna"
 date: "11 November 2016"
 output: pdf_document
-bibliography: 
-        - bibliography.bib
-        - RpackageCitations.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -13,48 +10,24 @@ knitr::opts_chunk$set(echo = TRUE)
 pkgs <- c('dplyr', 'ggplot2')
 ```
 
-#Determinants of Renewable Energy Investments:
+# Collected Indicators and Hypotheses
 
-#An EU Cross-Country Analysis
-
-## Introduction
-
-Today it is widely known the fact that climate change imposes real challenges to societies' environmental and economic wellbeing. This state of affairs urges us to think on ways to cope with the effects of climate change as well as finding potential alternatives to the roots of this human-caused phenomenon. Consequently, this pressure has put into question the traditional energy sources in use which have contributed to high levels of pollution and greenhouse gas emissions worldwide. Renewable energy adoption constitutes a means to deal with this challenge and renewable energy sources have been increasingly adopted worldwide for being a consistent way of improving energy efficiency by reducing energy consumption levels. Recent studies of @eyraud2011s and @del2014determinants identified that renewable energy sources will be the key drivers of the energy sector in coming years. Our main goal with this research project is to identify what are the determinants of investments in renewable sources of energy, namely wind and solar power energy sources, across European countries and to what extend factors, such as economic growth, changes in fuel prices, and interest rates have a significant impact on green energy investments. 
-
-##Literature Review
-
-According to @eyraud2011s, green investment can be defined as "investments intended to significantly reduce air pollutants and greenhouse gas emissions (GHG), without significantly reducing the production and consumption of non-energy goods". @ilas2014macroeconomic shares Eyraud's understanding and use 'green investments' and 'investments in renewable resources' interchangeably. 
-
-Two thirds of total carbon dioxide emissions in the world come from the energy sector and their effect on human livelihood is increasingly negative. There are two potential ways of offsetting the impact of such emissions - adaptation and mitigation. While adaptation refers to the efforts to limit human exposure to climate change, mitigation is related to human activities intended to reduce the magnitude of climate change and its impact on human life. Mitigation further involves a two-fold strategy - reduction of carbon dioxide emissions through efficiency gains in energy consumption and production, and the shift to other, cleaner forms of energy production through the adoption of alternative sources.
-
-@romano2011investments analyzes the driving of investments in renewable energy sources in low carbon and high carbon economies. This author argues that there are different ways of assessing the development of renewable energy sources in the literature. One method is to measure the replacement of traditional energy sources in the total energy supply while the other way which is also mentioned by @bird2005policies is to measure the total amount of renewable enegy produced. Each of those approaches were used by @marques2010motivations and @carley2009state. Marques et al. use the contribution of renewable to energy supply as a percentage of
-total primary energy supply while Carley focuses on the yearly electricity generation from renewable energy sources.
-
-By adopting Carley's approach, @romano2011investments conducted a dynamic panel analysis of the investments in renewable sources from 1980 to 2008 in a sample of 29 countries with distinct economic and social structures as well as different levels of economic development. The results of this study show that there is a continuity of
-investment behavior in those countries that have shown sensitivity towards renewable energy sources. Moreover, it shows that countries with traditionally stable high income tend to show more attention to technologies with lower environmental impact and improved energy efficiency in comparison with fast-growing countries. Authors also concluded that the presence of nuclear power plants, for example, may affect investments in renewable energy sources.
-
-Another interesting study on green investments was conducted by @ilas2014macroeconomic. The increasing importance of generating cleaner energy as a mitigation measure led the IMF to publish a article in its 2013 Energy Policy Journal containing explanation and trend analysis of the green investments. This research articles served as a bases for @ilas2014macroeconomic study on the factors affecting green investments at an international level in which the authors analyzed macroeconomic and political factors in different types of investment in green technologies, including low-emission energy supply, energy efficiency in energy-consuming sectors, and carbon sequestration, in 35 countries from 2000 to 2012. The analysis demonstrated that GDP per capita has a positive impact over investments in green technologies, while GDP growth and variables related to human development capacity as well as technological progress were both statistically insignificant.
-
-Taking into account those previous studies we now aim to verify the determinants of green investments across the 28 countries of the European Union between 2000 and 2015 by adopting a panel data approach. The impact of those determinants over investments in wind and solar energy sources will be estimated in real terms using fixed effects methodology.
-
-## Collected Indicators and Hypotheses
-
-###Source 1: World Bank - World Development Indicators 
+##Source 1: World Bank - World Development Indicators 
 
 *GDP per capita (constant 2000 US$)*
 
 Definition: Gross domestic product divided by midyear population.
-Hypothesis: GDP per capita has an important and positive impact on green investment.  They generate a higher demand for energy and clean air. Here GDP per capita is kept constant to correct for domestic inflation and exchange rate fluctuations. 
+Hypothesis: Economic growth and income have an important and positive impact on green investment.  They generate a higher demand for energy and clean air. /// as well as higher economic means for adopting new technologies - However, this interpretation is based on GDP only, right?////
 
-
+  
 *Energy imports, net (% of energy use)*
 
 Definition: Net energy imports are estimated as energy use less production, both measured in oil equivalents. Energy use refers to use of primary energy before transformation to other end-use fuels, which is equal to indigenous production plus imports and stock changes, minus exports and fuels supplied to ships and aircraft engaged in international transport.
 
-Hypothesis: The energy imports indicator may allows us to verify whether countries have reduced dependence on energy sources from other countries by producing more electricity through its own sources. However, if a country presents a negative value it indicates that the country is a net exporter.
-We expect that a lower energy imports value across increases the likelihood of countries to be using electricity generated locally via wind and solar energy sources. 
+Hypothesis: The energy imports indicator may allows us to verify whether countries have reduced dependence on energy sources from other countries by investing in renewable installations.
+We expect that a lower energy imports value increases the likelihood of countries investing in the installation of renewable energy sources. /// If a country presents a negative value it indicates that the country is a net exporter. ->> How to address this point? ///
 
-*Fossil fuel energy consumption (% of total)*
+*Fossil fuel energy consumption (% of total*
 
 Definition: Use of energy from fossil fuel as a percent of total energy use. Fossil fuel comprises coal, oil, petroleum, and natural gas products.
 
@@ -79,17 +52,67 @@ Hypothesis:  Higher interest rates imply that business will have less incentives
 Definition: Electricity generated from renewable energy sources is measured as the percent of gross electricity consumption in the EU-28 countries. It stands for the the ratio between the electricity produced from renewable energy sources and the gross national electricity consumption within a given year. 
 This is the variable over which we build our study on green investments. Electricity generation from wind and solar power energy sources is used as a proxy for renewable energy investments and we expect to verify the effects of the factors presented in this section onto green investments. 
 
-###Source 3: OPEC
+##Source 3: OPEC
 
 *Crude oil prices*
 
 Definition: Crude oil prices represent annual averages of selected OPEC crude oils (OPEC basket).
 The benchmark for crude oil price is the OPEC Reference Basket. This basket represents the average of prices of petroleum blends produced by OPEC members. Some of these oil blends include, for example, the Saharan Blend from Algeria, Arab Light from Saudi Arabia, BCF 17 from Venezuela, et cetera. OPEC tries to keep the price between given maxima and minima by increasing and decreasing its oil production. 
 
-Hypothesis: Crude oil prices can be used as proxy for the demand of energy from fossil fuels. One can assume that a higher price of fossil fuel is positively correlated with investments in renewable energy sources and changes in prices may reveal trends in energy production and consumption. In this sense, we hypothesize that a higher price in crude oil means higher demand, or at least, scarcer availiability of fossil fuels in general, and therefore, it may produce an incentive for countries to invest in renewable energy sources. 
+Hypothesis: Crude oil prices can be used as proxy for the demand of energy from fossil fuels. One can assume that a higher demand for fossil fuel is negatively correlated with investments in renewable energy sources and changes in prices may reveal trends in energy production and consumption. In this sense, we hypothesize that a higher price in crude oil means higher demand, or at least, scarcer availiability of fossil fuels, and therefore, it may have a negative effect in investments in renewable energy sources. 
 
 
-## Descriptive Statistics
+# Statistical Analysis
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -102,15 +125,62 @@ source('WDI_data.R')
 re_data <- merge(Combined_WDI,Combine_EuroStat,by = c("country", "year"), all.x = T, all.y = T)
 re_data1 <- na.omit(re_data)
 
+
 ```
 
 
+```{r pressure, echo=FALSE}
+
+# Data visualisation
+
+library(ggplot2)
+
+#selecting data
+re_data1 <- re_data1[order(re_data1$year,re_data1$re_gen),] #arranging data
+countries10 <- tail(re_data1,10)[1] %>% as.matrix() %>% as.character() %>% paste(collapse = "|") #finding top10
+re_data_top10  <- filter(re_data, grepl(countries10, country)) #selecting top 10 countries by generation 
+
+#create graph of RE Generation
+Colours <- c('#543005','#8c510a','#bf812d','#dfc27d','#f6e8c3','#c7eae5','#80cdc1',
+             '#35978f','#01665e','#003c30') # assigning colour pallette
+
+ggplot(data = na.omit(re_data_top10)) + 
+  aes(x = year, y = wind_gen, group = country, fill = country) +
+  geom_area(position = "stack") + 
+  scale_color_manual(values = Colours) +
+  xlab("\nYear") +
+  ylab("Wind Energy Generation(TWh)\n") +
+  ggtitle("Wind Energy Generation in ten largest wind energy markets in Europe\n") +
+  theme_bw()
+
+ggplot(data = na.omit(re_data_top10)) + 
+  aes(x = year, y = solar_gen, group = country, fill = country) +
+  geom_area(position = "stack") + 
+  scale_color_manual(values = Colours) +
+  xlab("\nYear") +
+  ylab("Solar Energy Generation(TWh)\n") +
+  ggtitle("Solar Energy Generation in ten largest wind energy markets in Europe\n") +
+  theme_bw()
+
+# create GDP_indicator
+#p <- summary(re_data1$GDP_capita) %>% as.matrix(.) %>% as.character() %>% paste(collapse = ",")
+summary(re_data$GDP_capita)
+re_data1$GDP_ind <- cut(re_data1$GDP_capita, c(5544, 13800, 30780, 45730, 110000), labels = c("<13k", "13k-30k", "30k-45k", "45k-110k"))
+
+# create graph
+Colours <- c("#1B9E77", "#D95F02", "#7570B3",
+             "#E7298A", "#66A61E", "#E6AB02")
+ggplot(data = re_data1,
+                    aes(GDP_capita,re_gen)) +
+        geom_jitter(aes(colour = GDP_ind)) +
+        scale_color_manual(values = Colours) +
+        xlab("\nGDP per capita") +
+        ylab("RE Generation\n") +
+        ggtitle("Renewable Energy generation by income group\n") +
+        theme_bw()
 
 
 
-##References
+```
 
-@R-dplyr and @CiteR works on R Programming were used as reference for this research proposal.
-
-[^KEY]: This is a footnote.
-
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
