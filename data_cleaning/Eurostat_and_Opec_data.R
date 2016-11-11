@@ -1,6 +1,13 @@
+library(rvest)
+library(dplyr)
+library(plyr)
+library(RJSONIO)
+library(WDI)
+library(rio)
+
 ### DEPENDENT VARIABLES
  
-### Installed Renewable Energy Capacity
+### Renewable Energy Generation
 
 solar <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/nrg_105a_1_Data.csv')
 wind1 <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/nrg_105a_2_Data.csv')
@@ -14,16 +21,17 @@ wind2 <- select(wind2, GEO, TIME, Value)
 wind3 <- select(wind3, GEO, TIME, Value)
 
 #assigning numeric variable
-solar[,'Value'] <- as.numeric(solar[,'Value'])
-wind1[,'Value'] <- as.numeric(wind1[,'Value'])
-wind2[,'Value'] <- as.numeric(wind2[,'Value'])
-wind3[,'Value'] <- as.numeric(wind3[,'Value'])
+
+solar[,'Value'] <- as.numeric(gsub(",", "",solar[,'Value'])) # gsub replaces "," in numbers to "" before converting them to numeric
+wind1[,'Value'] <- as.numeric(gsub(",", "",wind1[,'Value']))
+wind2[,'Value'] <- as.numeric(gsub(",", "",wind2[,'Value'])) 
+wind3[,'Value'] <- as.numeric(gsub(",", "",wind3[,'Value']))
 
 #assigning NA = zero generation
-solar[is.na(solar)] <- 0
-wind1[is.na(wind1)] <- 0
-wind2[is.na(wind2)] <- 0
-wind3[is.na(wind3)] <- 0
+#solar[is.na(solar)] <- 0
+#wind1[is.na(wind1)] <- 0
+#wind2[is.na(wind2)] <- 0
+#wind3[is.na(wind3)] <- 0
 
 #creating dependent variables
 re_generation <- merge(wind1, wind2, by = c('GEO', 'TIME'), all.x = T)
@@ -82,9 +90,10 @@ names(oil_price)[3] <- "GEO"
 head(oil_price)
 
 ### Merging the Eurostat databases
-Combine_EuroStat <- merge(re_generation, energy_patent, by =c("GEO","TIME"))
-Combine_EuroStat <- merge(Combine_EuroStat, interest_rates, by =c("GEO","TIME"))
-Combine_EuroStat <- merge(Combine_EuroStat, oil_price, by =c("GEO","TIME"))
+Combine_EuroStat <- merge(re_generation, energy_patent, by =c("GEO","TIME"), all.x = TRUE, all.y = TRUE)
+Combine_EuroStat <- merge(Combine_EuroStat, interest_rates, by =c("GEO","TIME"), all.x = TRUE, all.y = TRUE)
+Combine_EuroStat$GEO[Combine_EuroStat$GEO == "Germany (until 1990 former territory of the FRG)" ] <- "Germany"
+Combine_EuroStat <- merge(Combine_EuroStat, oil_price, by =c("GEO","TIME"), all.x = TRUE, all.y = TRUE)
 names(Combine_EuroStat)[1] <- "country" 
 names(Combine_EuroStat)[2] <- "year"
 rm(list = c("wind1", "wind2", "wind3","solar","energy_patent","interest_rates","oil_price","re_generation"))

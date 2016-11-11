@@ -70,13 +70,14 @@ Hypothesis: Crude oil prices can be used as proxy for the demand of energy from 
 
 ```{r cars}
 knitr::opts_chunk$set(echo = TRUE)
-<<<<<<< HEAD
-=======
-source('Eurostat_data.R')
-source('WDI_data.R')
-data <- merge(Combined_WDI,Combine_EuroStat,by = c("country", "year"), all.x = T)
 
->>>>>>> origin/master
+setwd("~/Desktop/CollaborativeDataMethods/VieiraKhanna_Assignment3/data_cleaning")
+source('Eurostat_and_Opec_data.R')
+source('WDI_data.R')
+re_data <- merge(Combined_WDI,Combine_EuroStat,by = c("country", "year"), all.x = T, all.y = T)
+re_data1 <- na.omit(re_data)
+
+
 ```
 
 
