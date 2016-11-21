@@ -239,6 +239,8 @@ rm(list = c("re_top10"))
 
 ##Models 
 
+A pooled OLS regression was run with total renewable energy generation as the dependent variable. We take a log of the variable GDP per capita to reduce the skewness in the data. A polynomial transformation was added for the variable patents to take into account the non linear relationship between innovation and RE generation. 
+
 ```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE}
 
 library(plm) #for panel data
@@ -256,14 +258,60 @@ summary(m.fe)
 #m.fe1  <- plm(re_gen  ~ log(GDP_capita) + netenergy_imports  + interest_rate +  oil_price + poly(patents,3), data= re_data2, index=c("country", "year"), model="within")
 #summary(m.fe1)
 
-# coefficients with FE
+# creating coeff table
 library(stargazer)  # for summary statistics and regression tables
 stargazer(m.pols, m.fe, df = FALSE, dep.var.labels = "Renewable Energy", covariate.labels = c('GDP per capita (constant 2000 US$)', 'Energy Imports (% of total energy)','Interest Rate', 'Oil Price'), notes = '(1) pooled OLS (2) Fixed effects', header = F, float = F, out = "reg.html")
 
-# poltting the polynomial variables
+
 library(sjPlot)
 library(sjmisc)
-sjp.lm(m.pols, type = "poly", poly.term = 'patents')
+
+# graphs for presentation
+sjp.lm(m.fe) # plotting coeffificents on graph
+sjp.lm(m.pols, type = "poly", poly.term = 'patents') # poltting the polynomial variables
+
+
+```
+
+We also extract country specific fixed effects to see which country have a higher effect. This can be a proxy for country specific things - environment for RE, policy, businesses etc. We plot the relative fixed effects and then plot the top 10 of them. It should make for a good graph. 
+
+```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE}
+
+# extracting the fixed effects 
+country_effect <- data.frame(summary(fixef(m.fe))[,1],summary(fixef(m.fe))[,4]) 
+country_effect$country <- rownames(country_effect)
+names(country_effect)[1] <- "intercept"
+names(country_effect)[2] <- "pvalue"
+country_effect$prop_intercept <- country_effect$intercept/min(country_effect$intercept) #calculating FE of each country relative to min
+#country_effect$SignificanceLevel <- cut(country_effect$pvalue, c(-1, 0.01, 0.05, 0.1, 1), labels = c("1%", "5%", "10%", "Not significant"))
+country_effect <- arrange(country_effect,prop_intercept)
+countries10 <- tail(country_effect,10)[3] %>% as.matrix() %>% as.character() %>% paste(collapse = "|") #finding top10
+country_effect10  <- filter(country_effect, grepl(countries10, country)) #selecting top 10 countries by fixed effect 
+
+# graphing relative FE
+ggplot(data = country_effect10) + aes(country,prop_intercept) + geom_bar(stat = "identity") + coord_cartesian(ylim = c(1,1.75)) +  xlab("\n Country") +
+  ylab(" ") +
+  ggtitle("Proportionate Country Effect relative to minimum\n") +
+  theme_bw(base_size = 10) 
+
+```
+
+Testing whether there are country specific fixed effects 
+
+```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE}
+
+# Testing whether FE is the best model 
+plmtest(m.pols, type=("bp")) # to test for panel effect
+
+m.re <- plm(re_gen  ~ log(GDP_capita) + netenergy_imports + poly(patents,3) + interest_rate +  oil_price, data= re_data1, index=c("country", "year"), model="random")
+phtest(m.fe, m.re) # Hausman test for fixed effects
+# conclude that FE is the better model 
+
+```
+
+We also model the interaction between oil price and import intensity of the country. Specifically we look at whether the effect of oil price on RE generation increases as the import intensity of the country - intuitively we would expect such an effect. A country that imports a lot of fossil fuels can be expected to react more when oild price increases. Since the interaction effects cannot be read of a table, we create a graph for it. 
+
+```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE}
 
 # extracting the fixed effects 
 country_effect <- data.frame(summary(fixef(m.fe))[,1],summary(fixef(m.fe))[,4]) 
