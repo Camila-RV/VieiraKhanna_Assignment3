@@ -237,6 +237,8 @@ rm(list = c("re_top10"))
 
 ```
 
+```
+
 ##References
 
 @R-dplyr and @CiteR works on R Programming were used as reference for this research proposal.
