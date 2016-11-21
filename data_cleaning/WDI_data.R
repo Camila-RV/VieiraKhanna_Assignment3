@@ -24,11 +24,8 @@ head(dat)[,1:4]
 dat_GDP <- arrange(dat, country, year)
 dat_GDP <- dplyr::rename(dat_GDP, year = year, GDP_capita = NY.GDP.PCAP.KD)
 dat_GDP <- select(dat_GDP, iso2c, country, year, GDP_capita)
+head(dat_GDP)
 
-## Identifying and removing missing values
-summary(dat_GDP$GDP_capita)
-#dat_GDP <- subset(x = dat_GDP,!is.na(GDP_capita))
-summary(dat_GDP$GDP_capita)
 
 
 #2. Tax on Business
@@ -51,11 +48,6 @@ business_tax <-dplyr::rename(business_tax, year = year, profit_tax = IC.TAX.PRFT
 business_tax <- select(business_tax, iso2c, country, year, profit_tax)
 head(business_tax)
 
-## Identifying and removing missing values
-summary(business_tax$profit_tax)
-#business_tax <- subset (x = business_tax,!is.na(profit_tax))
-summary(business_tax$profit_tax)
-## NA Removed: Data available only from 2013 onwards.
 
 
 #3. Energy imports, net (% of energy use)
@@ -75,10 +67,7 @@ energy_imp <- dplyr::rename(energy_imp, year = year, netenergy_imports = EG.IMP.
 energy_imp <- select(energy_imp, iso2c, country, year, netenergy_imports)
 head(energy_imp)
 
-## Identifying and removing missing values
-summary(energy_imp$netenergy_imports)
-#energy_imp <- subset(x = energy_imp,!is.na(netenergy_imports))
-summary(energy_imp$netenergy_imports)
+
 
 
 #4. Use of Fossil Fuel
@@ -97,6 +86,7 @@ head(fossilfuel)
 fossilfuel <- select(fossilfuel, iso2c, country, year, fossil_use)
 head(fossilfuel)
 
+<<<<<<< Updated upstream
 #5. Renewable energy consumption (% of total final energy consumption)
 
 WDIsearch('EG.FEC.RNEW.ZS', field ='indicator', cache = NULL)
@@ -119,6 +109,8 @@ head(re_pc_cons)
 #fossilfuel <- subset(x = fossilfuel,!is.na(fossil_use))
 #summary(fossilfuel$fossil_use)
 # NA Removed : There is no data for 2015 for EU-28 countries. 
+=======
+>>>>>>> Stashed changes
 
 Combined_WDI <- merge(dat_GDP, energy_imp, by = c('iso2c', 'year'), all.x = T, all.y = T)
 Combined_WDI <- merge(Combined_WDI, re_pc_cons, by = c('iso2c', 'year'), all.x = T, all.y = T)
