@@ -79,7 +79,7 @@ Hypothesis: Crude oil prices can be used as proxy for the demand of energy from 
 
 ```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE}
 
-setwd("~/Desktop/CollaborativeDataMethods/VieiraKhanna_Assignment3/data_cleaning")
+setwd("~/Desktop/CollaborativeSocialMethods/VieiraKhanna_Assignment3/data_cleaning")
 # Importing and cleaning data from Eurostat
 source('Eurostat_and_Opec_data.R')
 
