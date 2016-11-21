@@ -97,15 +97,32 @@ head(fossilfuel)
 fossilfuel <- select(fossilfuel, iso2c, country, year, fossil_use)
 head(fossilfuel)
 
+#5. Renewable energy consumption (% of total final energy consumption)
+
+WDIsearch('EG.FEC.RNEW.ZS', field ='indicator', cache = NULL)
+dat = WDI(indicator='EG.FEC.RNEW.ZS', country=c('AT','BE','BG','HR','CY',
+                                                   'CZ','DK','EE','FI','FR',
+                                                   'DE','GR','HU','IE','IT','LV',
+                                                   'LT','LU','MT','NL','PL',
+                                                   'PT','RO','SK','SI','ES','SE',
+                                                   'GB'), start=2000, end=2015)
+## Cleaning Data
+head(dat)
+re_pc_cons <- arrange (dat, country, year)
+re_pc_cons <- dplyr::rename(re_pc_cons, year = year, re_pc_cons = EG.FEC.RNEW.ZS)
+head(re_pc_cons)
+re_pc_cons <- select(re_pc_cons, iso2c, country, year, re_pc_cons)
+head(re_pc_cons)
+
 ## Identifying and removing missing values
-summary(fossilfuel$fossil_use)
+#summary(fossilfuel$fossil_use)
 #fossilfuel <- subset(x = fossilfuel,!is.na(fossil_use))
-summary(fossilfuel$fossil_use)
+#summary(fossilfuel$fossil_use)
 # NA Removed : There is no data for 2015 for EU-28 countries. 
 
 Combined_WDI <- merge(dat_GDP, energy_imp, by = c('iso2c', 'year'), all.x = T, all.y = T)
-Combined_WDI <- merge(Combined_WDI, fossilfuel, by = c('iso2c', 'year'), all.x = T, all.y = T)
-Combined_WDI <- select(Combined_WDI, year, country, GDP_capita, netenergy_imports, fossil_use)
+Combined_WDI <- merge(Combined_WDI, re_pc_cons, by = c('iso2c', 'year'), all.x = T, all.y = T)
+Combined_WDI <- select(Combined_WDI, year, country, GDP_capita, netenergy_imports, re_pc_cons)
 
-rm(list = c("fossilfuel", "energy_imp", "business_tax", "dat_GDP","dat"))
+rm(list = c("fossilfuel","re_pc_cons", "energy_imp", "business_tax", "dat_GDP","dat"))
 
