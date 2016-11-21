@@ -8,6 +8,7 @@ bibliography:
         - RpackageCitations.bib
 ---
 
+
 #Determinants of Renewable Energy Investments: An EU Cross-Country Analysis
 
 ## Introduction
