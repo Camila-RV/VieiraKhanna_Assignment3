@@ -1,28 +1,133 @@
-Presentation_FinalProject
+Determinants of Renewable Energy Investments: An EU Cross-Country Analysis
 ========================================================
-author: Camila Vieira & Tarun Khanna 
+author: Camila Vieira & Tarun Khanna
 date: 2 December 2016
 autosize: true
+font-family: 'Helvetica'
 
-First Slide
+<div class="midright" style="margin-right:-200px; margin-top:-200px;">
+<img src="flowchart_600x600.png"></img>
+</div>
+![Green Energy](Renewable_Energy_on_the_Grid.png)
+
+Agenda
 ========================================================
 
-For more details on authoring R presentations please visit <https://support.rstudio.com/hc/en-us/articles/200486468>.
+- Why Green Investments? 
+- Green Investments through Electricity Generation (Wind and Solar Energy)
+- Variables, Sources and Model
+- Results of Statistical Analysis
+- Main Results (1): Relative FE per country
+- Main Results (2): Effect of Patents
+- Main Results (3): Effect of Oil Price * Energy Intensity
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
-
-Slide With Code
+Why Green Investments...
 ========================================================
 
-```{r}
-summary(cars)
+![Green Energy](WindRader.png)
+
+***
+
+-
+
+Green investments through Electricity Generation (Wind and Solar Energy)
+========================================================
+
+
+
+Variables, Sources and Model 
+========================================================
+
+- x, x, x,.... World Development Indicators
+- x, x, x, ..... Eurostat
+- x ... OPEC
+
+
+Results of Statistical Analysis 
+========================================================
+
+```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE}
+
+setwd("~/Desktop/CollaborativeDataMethods/VieiraKhanna_Assignment3/data_cleaning")
+
+source('Eurostat_and_Opec_data.R')
+
+source('WDI_data.R')
+
+# Merging the data
+re_data <- merge(Combined_WDI,Combine_EuroStat,by = c("country", "year"), all.x = T, all.y = T)
+
+# Remove missing values
+re_data1 <- na.omit(re_data)
+
+
+library(plm) #for panel data
+library(ggplot2) #for graphs using ggplot
+
+# estimate pooled OLS model
+m.pols  <- plm(re_gen  ~ log(GDP_capita) + netenergy_imports + interest_rate +  oil_price + poly(patents,3), data= re_data1, index=c("country", "year"), model="pooling")
+summary(m.pols)
+
+# estimate panel fixed effects 
+m.fe  <- plm(re_gen  ~ log(GDP_capita) + netenergy_imports  + interest_rate +  oil_price + poly(patents,3), data= re_data1, index=c("country", "year"), model="within")
+summary(m.fe)
+
+#re_data2 <- re_data1[-which(re_data1$country == "Luxembourg"),]
+#m.fe1  <- plm(re_gen  ~ log(GDP_capita) + netenergy_imports  + interest_rate +  oil_price + poly(patents,3), data= re_data2, index=c("country", "year"), model="within")
+#summary(m.fe1)
+
+# creating coeff table
+library(stargazer)  # for summary statistics and regression tables
+stargazer(m.pols, m.fe, df = FALSE, dep.var.labels = "Renewable Energy", covariate.labels = c('GDP per capita (constant 2000 US$)', 'Energy Imports (% of total energy)','Interest Rate', 'Oil Price'), notes = '(1) pooled OLS (2) Fixed effects', header = F, float = F, out = "reg.html")
+
+
 ```
 
-Slide With Plot
+
+Main Results (1): Relative FE per Country
 ========================================================
 
-```{r, echo=FALSE}
-plot(cars)
+```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE}
+
+# extracting the fixed effects 
+country_effect <- data.frame(summary(fixef(m.fe))[,1],summary(fixef(m.fe))[,4]) 
+country_effect$country <- rownames(country_effect)
+names(country_effect)[1] <- "intercept"
+names(country_effect)[2] <- "pvalue"
+country_effect$prop_intercept <- country_effect$intercept/min(country_effect$intercept) #calculating FE of each country relative to min
+#country_effect$SignificanceLevel <- cut(country_effect$pvalue, c(-1, 0.01, 0.05, 0.1, 1), labels = c("1%", "5%", "10%", "Not significant"))
+country_effect <- arrange(country_effect,prop_intercept)
+countries10 <- tail(country_effect,10)[3] %>% as.matrix() %>% as.character() %>% paste(collapse = "|") #finding top10
+country_effect10  <- filter(country_effect, grepl(countries10, country)) #selecting top 10 countries by fixed effect 
+
+# graphing relative FE
+ggplot(data = country_effect10) + aes(country,prop_intercept) + geom_bar(stat = "identity") + coord_cartesian(ylim = c(1,1.75)) +  xlab("\n Country") +
+  ylab(" ") +
+  ggtitle("Proportionate Country Effect relative to minimum\n") +
+  theme_bw(base_size = 10) 
+
 ```
+
+Main Results (2): Effect of Patents
+========================================================
+
+```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE}
+
+library(sjPlot)
+library(sjmisc)
+
+# graphs for presentation
+sjp.lm(m.fe) # plotting coeffificents on graph
+sjp.lm(m.pols, type = "poly", poly.term = 'patents') # poltting the polynomial variables
+
+```
+
+Main Results (3): Effects of Oil Price * Energy Intensity
+========================================================
+
+
+
+Thank you!
+========================================================
+
+

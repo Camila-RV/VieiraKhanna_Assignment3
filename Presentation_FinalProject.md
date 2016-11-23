@@ -1,37 +1,70 @@
-Presentation_FinalProject
+Determinants of Renewable Energy Investments: An EU Cross-Country Analysis
 ========================================================
-author: Camila Vieira & Tarun Khanna 
+author: Camila Vieira & Tarun Khanna
 date: 2 December 2016
 autosize: true
+font-family: 'Helvetica'
 
-First Slide
+<div class="midright" style="margin-right:-200px; margin-top:-200px;">
+<img src="flowchart_600x600.png"></img>
+</div>
+![Green Energy](Renewable_Energy_on_the_Grid.png)
+
+Agenda
 ========================================================
 
-For more details on authoring R presentations please visit <https://support.rstudio.com/hc/en-us/articles/200486468>.
+- Why Green Investments? 
+- Green Investments through Electricity Generation (Wind and Solar Energy)
+- Variables, Sources and Model
+- Results of Statistical Analysis
+- Main Results (1): Relative FE per country
+- Main Results (2): Effect of Patents
+- Main Results (3): Effect of Oil Price * Energy Intensity
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+Why Green Investments...
+========================================================
 
-Slide With Code
+![Green Energy](WindRader.png)
+
+***
+
+-
+
+Green investments through Electricity Generation (Wind and Solar Energy)
 ========================================================
 
 
-```r
-summary(cars)
-```
 
-```
-     speed           dist       
- Min.   : 4.0   Min.   :  2.00  
- 1st Qu.:12.0   1st Qu.: 26.00  
- Median :15.0   Median : 36.00  
- Mean   :15.4   Mean   : 42.98  
- 3rd Qu.:19.0   3rd Qu.: 56.00  
- Max.   :25.0   Max.   :120.00  
-```
-
-Slide With Plot
+Variables, Sources and Model 
 ========================================================
 
-![plot of chunk unnamed-chunk-2](Presentation_FinalProject-figure/unnamed-chunk-2-1.png)
+- x, x, x,.... World Development Indicators
+- x, x, x, ..... Eurostat
+- x ... OPEC
+
+
+Results of Statistical Analysis 
+========================================================
+
+
+
+
+
+
+
+
+```
+Error in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]) : 
+  there is no package called 'pbkrtest'
+In addition: Warning messages:
+1: package 'rvest' was built under R version 3.2.5 
+2: package 'xml2' was built under R version 3.2.5 
+3: package 'dplyr' was built under R version 3.2.5 
+4: package 'plyr' was built under R version 3.2.5 
+5: In eval(expr, envir, enclos) : NAs introduced by coercion
+6: In eval(expr, envir, enclos) : NAs introduced by coercion
+7: package 'plm' was built under R version 3.2.3 
+Quitting from lines 50-84 (Presentation_FinalProject.Rpres) 
+Error: package or namespace load failed for 'plm'
+Execution halted
+```
