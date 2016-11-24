@@ -3,6 +3,7 @@ title: "MPP-E1180: Collaborative Social Data Analysis Assignment 3"
 author: "Camila Vieira & Tarun Khanna"
 date: "11 November 2016"
 output: pdf_document
+graphics: yes
 bibliography: 
         - bibliography.bib
         - RpackageCitations.bib
@@ -259,11 +260,6 @@ summary(m.fe)
 #m.fe1  <- plm(re_gen  ~ log(GDP_capita) + netenergy_imports  + interest_rate +  oil_price + poly(patents,3), data= re_data2, index=c("country", "year"), model="within")
 #summary(m.fe1)
 
-# creating coeff table
-library(stargazer)  # for summary statistics and regression tables
-stargazer(m.pols, m.fe, df = FALSE, dep.var.labels = "Renewable Energy", covariate.labels = c('GDP per capita (constant 2000 US$)', 'Energy Imports (% of total energy)','Interest Rate', 'Oil Price'), notes = '(1) pooled OLS (2) Fixed effects', header = F, float = F, out = "reg.html")
-
-
 library(sjPlot)
 library(sjmisc)
 
@@ -273,6 +269,16 @@ sjp.lm(m.pols, type = "poly", poly.term = 'patents') # poltting the polynomial v
 
 
 ```
+
+```{r, include=F, message=F, warning=FALSE, error=FALSE, echo=FALSE, results='asis'}
+
+# creating coeff table
+library(stargazer)  # for summary statistics and regression tables
+stargazer(m.pols, m.fe, df = FALSE, dep.var.labels = "Renewable Energy", covariate.labels = c('GDP per capita (constant 2000 US$)', 'Energy Imports (% of total energy)','Interest Rate', 'Oil Price'), notes = '(1) pooled OLS (2) Fixed effects', header = F, float = F, out = "reg.html")
+
+
+```
+
 
 We also extract country specific fixed effects to see which country have a higher effect. This can be a proxy for country specific things - environment for RE, policy, businesses etc. We plot the relative fixed effects and then plot the top 10 of them. It should make for a good graph. 
 
