@@ -86,7 +86,6 @@ head(fossilfuel)
 fossilfuel <- select(fossilfuel, iso2c, country, year, fossil_use)
 head(fossilfuel)
 
-<<<<<<< Updated upstream
 #5. Renewable energy consumption (% of total final energy consumption)
 
 WDIsearch('EG.FEC.RNEW.ZS', field ='indicator', cache = NULL)
@@ -109,8 +108,6 @@ head(re_pc_cons)
 #fossilfuel <- subset(x = fossilfuel,!is.na(fossil_use))
 #summary(fossilfuel$fossil_use)
 # NA Removed : There is no data for 2015 for EU-28 countries. 
-=======
->>>>>>> Stashed changes
 
 Combined_WDI <- merge(dat_GDP, energy_imp, by = c('iso2c', 'year'), all.x = T, all.y = T)
 Combined_WDI <- merge(Combined_WDI, re_pc_cons, by = c('iso2c', 'year'), all.x = T, all.y = T)

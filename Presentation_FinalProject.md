@@ -69,10 +69,72 @@ Results of Statistical Analysis
 
 
 
+```
+
+\begin{tabular}{@{\extracolsep{5pt}}lcc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-3} 
+\\[-1.8ex] & \multicolumn{2}{c}{Renewable Energy} \\ 
+\\[-1.8ex] & (1) & (2)\\ 
+\hline \\[-1.8ex] 
+ GDP per capita (constant 2000 US$) & $-$5,140.726$^{***}$ & $-$22,040.010$^{***}$ \\ 
+  & (1,313.410) & (6,685.495) \\ 
+  & & \\ 
+ Energy Imports (% of total energy) & 124.806$^{***}$ & 35.784 \\ 
+  & (24.141) & (58.786) \\ 
+  & & \\ 
+ Interest Rate & 184.328 & $-$191.850 \\ 
+  & (303.847) & (178.260) \\ 
+  & & \\ 
+ Oil Price & 32.588 & 97.223$^{***}$ \\ 
+  & (29.882) & (16.435) \\ 
+  & & \\ 
+ poly(patents, 3)1 & 143,344.100$^{***}$ & 32,639.910$^{**}$ \\ 
+  & (11,138.510) & (14,004.550) \\ 
+  & & \\ 
+ poly(patents, 3)2 & $-$28,074.010$^{**}$ & $-$12,537.660 \\ 
+  & (11,001.800) & (11,162.880) \\ 
+  & & \\ 
+ poly(patents, 3)3 & 61,063.540$^{***}$ & 40,002.590$^{***}$ \\ 
+  & (9,722.244) & (6,797.071) \\ 
+  & & \\ 
+ Constant & 47,913.670$^{***}$ &  \\ 
+  & (13,607.160) &  \\ 
+  & & \\ 
+\hline \\[-1.8ex] 
+Observations & 208 & 208 \\ 
+R$^{2}$ & 0.522 & 0.396 \\ 
+Adjusted R$^{2}$ & 0.502 & 0.334 \\ 
+F Statistic & 31.181$^{***}$ & 16.419$^{***}$ \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+ & \multicolumn{2}{r}{(1) pooled OLS (2) Fixed effects} \\ 
+\end{tabular} 
+```
+
+Main Results (1): Relative FE per Country
+========================================================
+
+![plot of chunk unnamed-chunk-3](Presentation_FinalProject-figure/unnamed-chunk-3-1.png)
+
+Main Results (2): Effect of Patents
+========================================================
+
+![plot of chunk unnamed-chunk-4](Presentation_FinalProject-figure/unnamed-chunk-4-1.png)![plot of chunk unnamed-chunk-4](Presentation_FinalProject-figure/unnamed-chunk-4-2.png)
+
+Main Results (3): Effects of Oil Price * Energy Intensity
+========================================================
 
 
 
+Thank you!
+========================================================
 
+
+<<<<<<< Updated upstream
 ```
 Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
   object 'vI' not found
@@ -88,3 +150,5 @@ Quitting from lines 70-104 (Presentation_FinalProject.Rpres)
 Error: package or namespace load failed for 'plm'
 Execution halted
 ```
+=======
+>>>>>>> Stashed changes

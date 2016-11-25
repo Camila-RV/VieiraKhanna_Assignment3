@@ -66,7 +66,7 @@ Renewable Energy Sources (Eurostat)
 Results of Statistical Analysis 
 ========================================================
 
-```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE}
+```{r, include=F, message=F, warning=FALSE, error=FALSE, echo=FALSE}
 
 setwd("~/Desktop/CollaborativeDataMethods/VieiraKhanna_Assignment3/data_cleaning")
 
@@ -96,13 +96,17 @@ summary(m.fe)
 #m.fe1  <- plm(re_gen  ~ log(GDP_capita) + netenergy_imports  + interest_rate +  oil_price + poly(patents,3), data= re_data2, index=c("country", "year"), model="within")
 #summary(m.fe1)
 
-# creating coeff table
-library(stargazer)  # for summary statistics and regression tables
-stargazer(m.pols, m.fe, df = FALSE, dep.var.labels = "Renewable Energy", covariate.labels = c('GDP per capita (constant 2000 US$)', 'Energy Imports (% of total energy)','Interest Rate', 'Oil Price'), notes = '(1) pooled OLS (2) Fixed effects', header = F, float = F, out = "reg.html")
-
 
 ```
 
+```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE}
+
+# creating coeff table
+library(stargazer)  # for summary statistics and regression tables
+stargazer(m.pols, m.fe, df = FALSE, dep.var.labels = "Renewable Energy", covariate.labels = c('GDP per capita (constant 2000 US$)', 'Energy Imports (% of total energy)','Interest Rate', 'Oil Price'), notes = '(1) pooled OLS (2) Fixed effects', header = F, float = F)
+
+
+```
 
 Main Results (1): Relative FE per Country
 ========================================================
