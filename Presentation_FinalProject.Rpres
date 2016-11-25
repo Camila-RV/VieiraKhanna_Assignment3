@@ -3,19 +3,13 @@ Determinants of Renewable Energy Investments: An EU Cross-Country Analysis
 author: Camila Vieira & Tarun Khanna
 date: 2 December 2016
 autosize: true
-font-family: 'Helvetica'
-
-<div class="midright" style="margin-right:-200px; margin-top:-200px;">
-<img src="flowchart_600x600.png"></img>
-</div>
-![Green Energy](Renewable_Energy_on_the_Grid.png)
 
 Agenda
 ========================================================
-
-- Why Green Investments? 
-- Green Investments through Electricity Generation (Wind and Solar Energy)
-- Variables, Sources and Model
+<br>
+- Why Renewable Energy(RE) Investments? 
+- RE Investments through Electricity Generation (Wind and Solar Energy)
+- Variables, Sources and Models
 - Results of Statistical Analysis
 - Main Results (1): Relative FE per country
 - Main Results (2): Effect of Patents
@@ -23,24 +17,50 @@ Agenda
 
 Why Green Investments...
 ========================================================
-
-![Green Energy](WindRader.png)
+right: 65%
+<br>
+<br>
+![Green Energy](Renewable_Energy_on_the_Grid.png)
 
 ***
+<br>
+- Cope with the effects of climate change
+- Accelerate potential alternatives
+- Focus on mitigation: 
+<br>(+) Reduce CO2 emissions w/ efficiency gains in E consumption/production
+<br>(+) Adoption of other forms of energy production
 
--
+**Research Question:**
+<br>
+What are the determinants of investments in RE?
 
 Green investments through Electricity Generation (Wind and Solar Energy)
 ========================================================
 
+![Wind Energy](WindEnergy_Gen.png)
+
+***
+
+![Solar Energy](SolarEnergy_Gen.png)
 
 
-Variables, Sources and Model 
+Variables, Sources and Models 
 ========================================================
-
-- x, x, x,.... World Development Indicators
-- x, x, x, ..... Eurostat
-- x ... OPEC
+<br>
+**Dependent variable:**
+<br> - Electricity generation from 
+Renewable Energy Sources (Eurostat)
+<br>
+<br>
+**Independent variables:** 
+<br> - GDP per Capita and Net Energy Imports (WDI)
+<br>- Innovation in RE and long-term interest rates (Eurostat)
+<br>- Crude oil prices (OPEC)
+<br>
+<br>
+**Models**:
+<br>*Panel Data with 28 EU-countries (2005-2013)*
+<br> - Pooled OLS + Relative Fixed Effects
 
 
 Results of Statistical Analysis 
