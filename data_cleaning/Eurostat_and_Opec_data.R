@@ -41,7 +41,16 @@ re_generation <- select(re_generation, GEO, TIME, wind_gen)
 re_generation <- merge(re_generation, solar, by = c('GEO', 'TIME'), all.x = T)
 names(re_generation)[4] <- "solar_gen" 
 re_generation$re_gen <- re_generation$wind_gen + re_generation$solar_gen
- 
+
+# Share of electricity produced from renewable energy sources and the gross national electricity consumption
+re_pc_elec <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/nrg_ind_335a_1_Data.csv')
+re_pc_elec <- re_pc_elec[-which(re_pc_elec$GEO == "European Union (28 countries)"),]
+re_pc_elec <- re_pc_elec[which(re_pc_elec$INDIC_EN == "Share of renewable energy in electricity"),]
+re_pc_elec[,5] <- as.numeric(re_pc_elec[,5])
+names(re_pc_elec)[5] <- "re_pc_elec"
+re_pc_elec$INDIC_EN <- NULL #deleting unnecessary columns
+re_pc_elec$UNIT <- NULL #deleting unnecessary columns
+
 ### INDEPENDENT VARIABLES
 
 ###Eurostat
@@ -90,12 +99,15 @@ names(oil_price)[3] <- "GEO"
 head(oil_price)
 
 ### Merging the Eurostat databases
-Combine_EuroStat <- merge(re_generation, energy_patent, by =c("GEO","TIME"), all.x = TRUE, all.y = TRUE)
+Combine_EuroStat <- merge(re_generation, re_pc_elec, by =c("GEO","TIME"), all.x = TRUE, all.y = TRUE)
+Combine_EuroStat <- merge(Combine_EuroStat, energy_patent, by =c("GEO","TIME"), all.x = TRUE, all.y = TRUE)
 Combine_EuroStat <- merge(Combine_EuroStat, interest_rates, by =c("GEO","TIME"), all.x = TRUE, all.y = TRUE)
 Combine_EuroStat$GEO[Combine_EuroStat$GEO == "Germany (until 1990 former territory of the FRG)" ] <- "Germany"
 Combine_EuroStat <- merge(Combine_EuroStat, oil_price, by =c("GEO","TIME"), all.x = TRUE, all.y = TRUE)
 names(Combine_EuroStat)[1] <- "country" 
 names(Combine_EuroStat)[2] <- "year"
-rm(list = c("wind1", "wind2", "wind3","solar","energy_patent","interest_rates","oil_price","re_generation"))
+
+rm(list = c("wind1", "wind2", "wind3","solar","energy_patent","interest_rates","oil_price",
+            "re_generation", "re_pc_elec"))
 
 

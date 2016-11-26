@@ -111,7 +111,7 @@ head(re_pc_cons)
 
 Combined_WDI <- merge(dat_GDP, energy_imp, by = c('iso2c', 'year'), all.x = T, all.y = T)
 Combined_WDI <- merge(Combined_WDI, re_pc_cons, by = c('iso2c', 'year'), all.x = T, all.y = T)
-Combined_WDI <- select(Combined_WDI, year, country, GDP_capita, netenergy_imports, re_pc_cons)
+Combined_WDI <- select(Combined_WDI, year, country, GDP_capita, netenergy_imports)
 
 rm(list = c("fossilfuel","re_pc_cons", "energy_imp", "business_tax", "dat_GDP","dat"))
 
