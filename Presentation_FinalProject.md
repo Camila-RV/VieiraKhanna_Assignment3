@@ -34,13 +34,17 @@ right: 65%
 <br>
 What are the determinants of investments in RE?
 
-Green investments through Electricity Generation (Wind and Solar Energy)
+Renewable Electricity Generation in European Countries
 ========================================================
-
+<br>
+<br>
+<br>
 ![Wind Energy](WindEnergy_Gen.png)
 
 ***
-
+<br>
+<br>
+<br>
 ![Solar Energy](SolarEnergy_Gen.png)
 
 
@@ -63,13 +67,11 @@ Renewable Energy Sources (Eurostat)
 <br> - Pooled OLS + Relative Fixed Effects
 
 
-Results of Statistical Analysis 
+Results of Statistical Analysis (1)
 ========================================================
 
 
 
-
-```
 
 \begin{tabular}{@{\extracolsep{5pt}}lcc} 
 \\[-1.8ex]\hline 
@@ -113,42 +115,32 @@ F Statistic & 31.181$^{***}$ & 16.419$^{***}$ \\
 \textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
  & \multicolumn{2}{r}{(1) pooled OLS (2) Fixed effects} \\ 
 \end{tabular} 
-```
 
-Main Results (1): Relative FE per Country
+Results of Statistical Analysis (2)
 ========================================================
 
 ![plot of chunk unnamed-chunk-3](Presentation_FinalProject-figure/unnamed-chunk-3-1.png)
 
-Main Results (2): Effect of Patents
+
+
+Main Results (1): Country specific effects
 ========================================================
 
-![plot of chunk unnamed-chunk-4](Presentation_FinalProject-figure/unnamed-chunk-4-1.png)![plot of chunk unnamed-chunk-4](Presentation_FinalProject-figure/unnamed-chunk-4-2.png)
+![plot of chunk unnamed-chunk-4](Presentation_FinalProject-figure/unnamed-chunk-4-1.png)
 
-Main Results (3): Effects of Oil Price * Energy Intensity
+Main Results (2): Effect of Innovation
+========================================================
+
+![plot of chunk unnamed-chunk-5](Presentation_FinalProject-figure/unnamed-chunk-5-1.png)
+
+Main Results (3): Effect of Oil Price 
 ========================================================
 
 
+
+![plot of chunk unnamed-chunk-7](Presentation_FinalProject-figure/unnamed-chunk-7-1.png)
 
 Thank you!
 ========================================================
 
 
-<<<<<<< Updated upstream
-```
-Error in loadNamespace(i, c(lib.loc, .libPaths()), versionCheck = vI[[i]]) : 
-  object 'vI' not found
-In addition: Warning messages:
-1: package 'rvest' was built under R version 3.2.5 
-2: package 'xml2' was built under R version 3.2.5 
-3: package 'dplyr' was built under R version 3.2.5 
-4: package 'plyr' was built under R version 3.2.5 
-5: In eval(expr, envir, enclos) : NAs introduced by coercion
-6: In eval(expr, envir, enclos) : NAs introduced by coercion
-7: package 'plm' was built under R version 3.2.3 
-Quitting from lines 70-104 (Presentation_FinalProject.Rpres) 
-Error: package or namespace load failed for 'plm'
-Execution halted
-```
-=======
->>>>>>> Stashed changes

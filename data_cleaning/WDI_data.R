@@ -88,8 +88,8 @@ head(fossilfuel)
 
 #5. Renewable energy consumption (% of total final energy consumption)
 
-WDIsearch('EG.FEC.RNEW.ZS', field ='indicator', cache = NULL)
-dat = WDI(indicator='EG.FEC.RNEW.ZS', country=c('AT','BE','BG','HR','CY',
+WDIsearch('EG.ELC.RNEW.ZS', field ='indicator', cache = NULL)
+dat = WDI(indicator='EG.ELC.RNEW.ZS', country=c('AT','BE','BG','HR','CY',
                                                    'CZ','DK','EE','FI','FR',
                                                    'DE','GR','HU','IE','IT','LV',
                                                    'LT','LU','MT','NL','PL',
@@ -98,7 +98,7 @@ dat = WDI(indicator='EG.FEC.RNEW.ZS', country=c('AT','BE','BG','HR','CY',
 ## Cleaning Data
 head(dat)
 re_pc_cons <- arrange (dat, country, year)
-re_pc_cons <- dplyr::rename(re_pc_cons, year = year, re_pc_cons = EG.FEC.RNEW.ZS)
+re_pc_cons <- dplyr::rename(re_pc_cons, year = year, re_pc_cons = EG.ELC.RNEW.ZS)
 head(re_pc_cons)
 re_pc_cons <- select(re_pc_cons, iso2c, country, year, re_pc_cons)
 head(re_pc_cons)
