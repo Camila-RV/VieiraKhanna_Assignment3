@@ -1,28 +1,29 @@
 ---
-title: "Untitled"
-output: html_document
+title: "Determinants of Renewable Energy Investments: An EU Cross-Country Analysis"
+output: flexdashboard::flex_dashboard
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+### Background: 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+Climate change imposes real challenges to societies' environmental and economic wellbeing. This state of affairs urges us to think on ways to cope with the effects of climate change as well as finding potential alternatives to the roots of this human-caused phenomenon. 
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+Mitigation is one way of offsetting the impact of the carbon dioxide emissions. This can be done through shifting to other, cleaner forms of energy production through the adoption of alternative sources. 
 
-```{r cars}
-summary(cars)
-```
+In this page, we aim to present the results of our analysis on the the determinants of investments in renewable energy across the 28 countries of the European Union between 2005 and 2013. 
 
-## Including Plots
 
-You can also embed plots, for example:
+Row
+------------------------
+### Solar and Wind Energy
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE}
+
+source('~/Desktop/Codes_graphs.R')
+
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
