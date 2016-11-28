@@ -1,0 +1,123 @@
+---
+title: 'Determinants of Renewable Energy: An EU Cross-Country Analysis'
+subtitle: 'MPP-E1180: Collaborative Social Science Data Analysis'
+author: Camila Vieira & Tarun Khanna
+date: December 2nd, 2016
+output: ioslides_presentation
+transition: faster
+smaller: true 
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# What is the current RE uptake across EU countries? 
+
+```{r, include=F, message=F, warning=FALSE, error=FALSE, echo=FALSE}
+library(rvest)
+library(dplyr)
+library(plyr)
+library(RJSONIO)
+library(WDI)
+library(rio)
+
+### DEPENDENT VARIABLES
+ 
+### Renewable Energy Generation
+
+solar <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/nrg_105a_1_Data.csv')
+wind1 <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/nrg_105a_2_Data.csv')
+wind2 <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/nrg_105a_3_Data.csv')
+wind3 <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/nrg_105a_4_Data.csv')
+
+#select the necessary columns
+solar <- select(solar, GEO, TIME, Value)
+wind1 <- select(wind1, GEO, TIME, Value)
+wind2 <- select(wind2, GEO, TIME, Value)
+wind3 <- select(wind3, GEO, TIME, Value)
+
+#assigning numeric variable
+
+solar[,'Value'] <- as.numeric(gsub(",", "",solar[,'Value'])) # gsub replaces "," in numbers to "" before converting them to numeric
+wind1[,'Value'] <- as.numeric(gsub(",", "",wind1[,'Value']))
+wind2[,'Value'] <- as.numeric(gsub(",", "",wind2[,'Value'])) 
+wind3[,'Value'] <- as.numeric(gsub(",", "",wind3[,'Value']))
+
+#assigning NA = zero generation
+#solar[is.na(solar)] <- 0
+#wind1[is.na(wind1)] <- 0
+#wind2[is.na(wind2)] <- 0
+#wind3[is.na(wind3)] <- 0
+
+#creating dependent variables
+re_generation <- merge(wind1, wind2, by = c('GEO', 'TIME'), all.x = T)
+re_generation <- merge(re_generation, wind3 , by = c('GEO', 'TIME'), all.x = T)
+re_generation$wind_gen <- re_generation$Value.x+ re_generation$Value.y+ re_generation$Value
+re_generation <- select(re_generation, GEO, TIME, wind_gen)
+re_generation <- merge(re_generation, solar, by = c('GEO', 'TIME'), all.x = T)
+names(re_generation)[4] <- "solar_gen" 
+re_generation$re_gen <- re_generation$wind_gen + re_generation$solar_gen
+
+# Share of electricity produced from renewable energy sources and the gross national electricity consumption
+re_pc_elec <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/nrg_ind_335a_1_Data.csv')
+re_pc_elec <- re_pc_elec[-which(re_pc_elec$GEO == "European Union (28 countries)"),]
+re_pc_elec <- re_pc_elec[which(re_pc_elec$INDIC_EN == "Share of renewable energy in electricity"),]
+re_pc_elec[,5] <- as.numeric(re_pc_elec[,5])
+names(re_pc_elec)[5] <- "re_pc_elec"
+re_pc_elec$INDIC_EN <- NULL #deleting unnecessary columns
+re_pc_elec$UNIT <- NULL #deleting unnecessary columns
+
+# Share of electricity produced from renewable energy sources and the gross national electricity consumption
+elec_total <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/nrg_105a_1_Data_final.csv')
+elec_total <- elec_total[-which(elec_total$GEO == c("Euro area (19 countries)","European Union (28 countries)")),]
+elec_total <- elec_total[which(elec_total$UNIT == "Gigawatt-hour"),]
+elec_total[,'Value'] <- as.numeric(gsub(",", "",elec_total[,'Value'])) # gsub replaces "," in numbers to "" before converting them to numeric
+names(elec_total)[6] <- "elec_total"
+elec_total <- elec_total[,-(3:5),drop=FALSE]  #deleting unnecessary columns
+elec_total$`Flag and Footnotes` <- NULL #deleting unnecessary columns
+
+library(googleVis)
+
+# Plot
+re_map <- gvisGeoChart(re_data1, locationvar = 'country',
+                      colorvar = 'sw_pc_elec',
+                      options = list(
+                        colors = "['#f7fcb9', '#31a354']",
+                        region ="150"
+                        
+                        
+                          ))
+
+print(re_map, tag = 'chart')
+```
+
+# Has RE generation increased substantially over the last years?
+
+## ![Wind Energy](WindEnergy_Gen.png)
+## ![Solar Energy](SolarEnergy_Gen.png)
+
+
+#What are the determinants of RE generation in EU countries?
+
+## Variables, Sources and Model
+
+### Independent variables:
+- GDP per Capita and Net Energy Imports (WDI)
+- Innovation in RE and long-term interest rates (Eurostat)
+- Crude oil prices (OPEC)
+
+### Model:
+- Panel Data with 28 EU-countries (2005-2013)
+
+# Fixed Effects
+
+
+# Oil Prices in RE
+
+
+# Fixed Effects Explanation 
+
+
+# Conclusion
