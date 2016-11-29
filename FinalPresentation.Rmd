@@ -16,80 +16,31 @@ knitr::opts_chunk$set(echo = FALSE)
 # What is the current RE uptake across EU countries? 
 
 ```{r, include=F, message=F, warning=FALSE, error=FALSE, echo=FALSE}
-library(rvest)
-library(dplyr)
-library(plyr)
-library(RJSONIO)
-library(WDI)
-library(rio)
+setwd("~/Desktop/CollaborativeDataMethods/VieiraKhanna_Assignment3/data_cleaning")
 
-### DEPENDENT VARIABLES
- 
-### Renewable Energy Generation
+# Importing and cleaning data from Eurostat
+source('Eurostat_and_Opec_data.R')
 
-solar <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/nrg_105a_1_Data.csv')
-wind1 <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/nrg_105a_2_Data.csv')
-wind2 <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/nrg_105a_3_Data.csv')
-wind3 <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/nrg_105a_4_Data.csv')
+# Importing and cleaning data from World Bank
+source('WDI_data.R')
 
-#select the necessary columns
-solar <- select(solar, GEO, TIME, Value)
-wind1 <- select(wind1, GEO, TIME, Value)
-wind2 <- select(wind2, GEO, TIME, Value)
-wind3 <- select(wind3, GEO, TIME, Value)
+# Merging the data
+re_data <- merge(Combined_WDI,Combine_EuroStat,by = c("country", "year"), all.x = T, all.y = T)
 
-#assigning numeric variable
+# Remove missing values
+re_data1 <- na.omit(re_data)
 
-solar[,'Value'] <- as.numeric(gsub(",", "",solar[,'Value'])) # gsub replaces "," in numbers to "" before converting them to numeric
-wind1[,'Value'] <- as.numeric(gsub(",", "",wind1[,'Value']))
-wind2[,'Value'] <- as.numeric(gsub(",", "",wind2[,'Value'])) 
-wind3[,'Value'] <- as.numeric(gsub(",", "",wind3[,'Value']))
-
-#assigning NA = zero generation
-#solar[is.na(solar)] <- 0
-#wind1[is.na(wind1)] <- 0
-#wind2[is.na(wind2)] <- 0
-#wind3[is.na(wind3)] <- 0
-
-#creating dependent variables
-re_generation <- merge(wind1, wind2, by = c('GEO', 'TIME'), all.x = T)
-re_generation <- merge(re_generation, wind3 , by = c('GEO', 'TIME'), all.x = T)
-re_generation$wind_gen <- re_generation$Value.x+ re_generation$Value.y+ re_generation$Value
-re_generation <- select(re_generation, GEO, TIME, wind_gen)
-re_generation <- merge(re_generation, solar, by = c('GEO', 'TIME'), all.x = T)
-names(re_generation)[4] <- "solar_gen" 
-re_generation$re_gen <- re_generation$wind_gen + re_generation$solar_gen
-
-# Share of electricity produced from renewable energy sources and the gross national electricity consumption
-re_pc_elec <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/nrg_ind_335a_1_Data.csv')
-re_pc_elec <- re_pc_elec[-which(re_pc_elec$GEO == "European Union (28 countries)"),]
-re_pc_elec <- re_pc_elec[which(re_pc_elec$INDIC_EN == "Share of renewable energy in electricity"),]
-re_pc_elec[,5] <- as.numeric(re_pc_elec[,5])
-names(re_pc_elec)[5] <- "re_pc_elec"
-re_pc_elec$INDIC_EN <- NULL #deleting unnecessary columns
-re_pc_elec$UNIT <- NULL #deleting unnecessary columns
-
-# Share of electricity produced from renewable energy sources and the gross national electricity consumption
-elec_total <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/nrg_105a_1_Data_final.csv')
-elec_total <- elec_total[-which(elec_total$GEO == c("Euro area (19 countries)","European Union (28 countries)")),]
-elec_total <- elec_total[which(elec_total$UNIT == "Gigawatt-hour"),]
-elec_total[,'Value'] <- as.numeric(gsub(",", "",elec_total[,'Value'])) # gsub replaces "," in numbers to "" before converting them to numeric
-names(elec_total)[6] <- "elec_total"
-elec_total <- elec_total[,-(3:5),drop=FALSE]  #deleting unnecessary columns
-elec_total$`Flag and Footnotes` <- NULL #deleting unnecessary columns
+#creating var for solar and wind gen as percent of total elec consumption
+re_data1$sw_pc_elec <- re_data1$re_gen/re_data1$elec_total*100 
 
 library(googleVis)
-
 # Plot
 re_map <- gvisGeoChart(re_data1, locationvar = 'country',
                       colorvar = 'sw_pc_elec',
                       options = list(
                         colors = "['#f7fcb9', '#31a354']",
                         region ="150"
-                        
-                        
                           ))
-
 print(re_map, tag = 'chart')
 ```
 
@@ -111,13 +62,62 @@ print(re_map, tag = 'chart')
 ### Model:
 - Panel Data with 28 EU-countries (2005-2013)
 
-# Fixed Effects
-
-
 # Oil Prices in RE
 
+```{r, include=F, message=F, warning=FALSE, error=FALSE, echo=FALSE}
+library(plm)
+m.fe.i  <- plm(sw_pc_elec ~ oil_price*netenergy_imports + log(GDP_capita) + patents + interest_rate, data= re_data1, index=c("country", "year"), model="within")
+summary(m.fe.i)
 
-# Fixed Effects Explanation 
+vcov(m.fe.i) #variance covariance matrix
 
+vb1 <- vcov(m.fe.i)[1]
+vb3 <- vcov(m.fe.i)[6,6]
+cvb1b3 <- vcov(m.fe.i)[1,6]
+margins <- data.frame(
+  netenergy_imports = min(re_data1$netenergy_imports, na.rm =T):max(re_data1$netenergy_imports, na.rm =T),
+  me = coef(m.fe.i)[1] + coef(m.fe.i)[6] * ( 
+  min(re_data1$netenergy_imports, na.rm =T):max(re_data1$netenergy_imports, na.rm =T)),
+  se = sqrt(vb1 + (min(re_data1$netenergy_imports, na.rm =T):max(re_data1$netenergy_imports, na.rm =T))^2 * vb3 + 2 *(min(re_data1$netenergy_imports, na.rm =T):max(re_data1$netenergy_imports, na.rm =T)) * cvb1b3)
+)
+margins$lwr <- margins$me - 1.96 * margins$se
+margins$upr <- margins$me + 1.96 * margins$se
 
-# Conclusion
+ggplot(data = margins, aes(x = netenergy_imports, y = me, ymin = lwr, ymax = upr)) +
+  geom_ribbon(fill = 'blue', alpha = 0.2) + 
+  geom_line(colour = "red", size =1) + theme_bw() + 
+  geom_hline(yintercept = 0, linetype = 'dashed') + 
+  xlab("\nEnergy Imports (% of consumption)") + 
+  ylab("Marginal Effect of Oil Price\n") +
+  ggtitle("Marginal Effect of Oil Price conditioned over Import Intensity of Energy\n") +
+  theme(panel.background = element_rect(fill = 'white', colour = 'black'))
+```
+
+# GDP per Capita 
+
+```{r, include=F, message=F, warning=FALSE, error=FALSE, echo=FALSE}
+library(stargazer)  
+stargazer(m.pols, m.fe, df = FALSE, dep.var.labels = "Renewable Energy", covariate.labels = c('GDP per capita (constant 2000 US$)', 'Energy Imports (% of total energy)','Interest Rate', 'Oil Price'), notes = '(1) pooled OLS (2) Fixed effects', header = F, float = F, out = "reg.html")
+```
+
+Fixed Effects Explanation 
+```{r, include=F, message=F, warning=FALSE, error=FALSE, echo=FALSE}
+country_effect <- data.frame(summary(fixef(m.fe))[,1],summary(fixef(m.fe))[,4]) 
+country_effect$country <- rownames(country_effect)
+names(country_effect)[1] <- "intercept"
+names(country_effect)[2] <- "pvalue"
+country_effect$prop_intercept <- country_effect$intercept/min(country_effect$intercept)
+
+#calculating FE of each country relative to min
+country_effect <- arrange(country_effect,prop_intercept)
+countries10 <- tail(country_effect,10)[3] %>% as.matrix() %>% as.character() %>% paste(collapse = "|") #finding top10
+country_effect10  <- filter(country_effect, grepl(countries10, country)) #selecting top 10 countries by fixed effect 
+
+# graphing relative FE
+ggplot(data = country_effect10) + aes(country,prop_intercept) + geom_bar(stat = "identity") + coord_cartesian(ylim = c(1,1.75)) +  xlab("\n Country") +
+  ylab(" ") +
+  ggtitle("Proportionate Country Effect relative to minimum\n") +
+  theme_bw(base_size = 10) 
+```
+
+# Overall Results and Conclusion
