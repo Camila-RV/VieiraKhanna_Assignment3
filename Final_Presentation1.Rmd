@@ -124,7 +124,7 @@ rm(list = c("re_solar_top10", "countries10","p","countries","Colours"))
 ## Regression results
 
 ### Estimates of the independent variables
-####### *The logged GDP per capita is statistically significant but it has a negative sign.
+
 ```{r, include=F, message=F, warning=FALSE, error=FALSE, echo=FALSE}
 
 library(plm) #for panel data
@@ -155,7 +155,7 @@ library(sjmisc)
 sjp.lm(m.fe, title = "", theme_bw()) # plotting coeffificents on graph
 
 ```
- 
+
 
 ```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE, eval=FALSE, eval=FALSE}
 library(plm)
@@ -247,5 +247,6 @@ ggplot(data = country_effect10) + aes(country,prop_intercept) + geom_bar(stat = 
   theme_bw(base_size = 10) 
 
 ```
-
+## Fixed Effects
 ## Overall Results and Conclusion
+
