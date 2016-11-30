@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # What is the current RE uptake across EU countries? 
 
-```{r, include=F, message=F, warning=FALSE, error=FALSE, echo=FALSE, type = 'html'}
+```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE, type = 'html', results='asis'}
 setwd("~/Desktop/CollaborativeDataMethods/VieiraKhanna_Assignment3/data_cleaning")
 
 # Importing and cleaning data from Eurostat
@@ -64,7 +64,7 @@ print(re_map, tag = 'chart')
 
 # Oil Prices in RE
 
-```{r, include=F, message=F, warning=FALSE, error=FALSE, echo=FALSE}
+```{r, include=F, message=F, warning=FALSE, error=FALSE, echo=FALSE, eval=FALSE}
 library(plm)
 m.fe.i  <- plm(sw_pc_elec ~ oil_price*netenergy_imports + log(GDP_capita) + patents + interest_rate, data= re_data1, index=c("country", "year"), model="within")
 summary(m.fe.i)

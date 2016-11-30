@@ -52,7 +52,7 @@ re_pc_elec$INDIC_EN <- NULL #deleting unnecessary columns
 re_pc_elec$UNIT <- NULL #deleting unnecessary columns
 
 # Share of electricity produced from renewable energy sources and the gross national electricity consumption
-elec_total <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/nrg_105a_1_Data_final.csv')
+elec_total <- import('https://raw.githubusercontent.com/Camila-RV/VieiraKhanna_Assignment3/master/data_raw/nrg_105a_1_total_consumption.csv')
 elec_total <- elec_total[-which(elec_total$GEO == c("Euro area (19 countries)","European Union (28 countries)")),]
 elec_total <- elec_total[which(elec_total$UNIT == "Gigawatt-hour"),]
 elec_total[,'Value'] <- as.numeric(gsub(",", "",elec_total[,'Value'])) # gsub replaces "," in numbers to "" before converting them to numeric
