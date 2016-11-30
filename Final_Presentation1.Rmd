@@ -3,19 +3,17 @@ title: 'Determinants of Renewable Energy: An EU Cross-Country Analysis'
 subtitle: 'MPP-E1180: Collaborative Social Science Data Analysis'
 author: Camila Vieira & Tarun Khanna
 date: December 2nd, 2016
-output: ioslides_presentation
+output: 
+  ioslides_presentation
 transition: faster
 smaller: true 
 
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-```
-
-# What is the current RE uptake across EU countries? 
+## Proportion of electricity consumption from wind and solar in Europe
 
 ```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE, type = 'html', results='asis'}
+
 setwd("~/Desktop/CollaborativeDataMethods/VieiraKhanna_Assignment3/data_cleaning")
 
 # Importing and cleaning data from Eurostat
@@ -41,30 +39,124 @@ re_map <- gvisGeoChart(re_data1, locationvar = 'country',
                         colors = "['#f7fcb9', '#31a354']",
                         region ="150"
                           ))
+
 print(re_map, tag = 'chart')
+
 ```
 
-# Has RE generation increased substantially over the last years?
+## RE generation increased substantially over the last decade (1)
 
-## ![Wind Energy](WindEnergy_Gen.png)
-## ![Solar Energy](SolarEnergy_Gen.png)
+```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE, fig.width = 6, fig.height = 4}
 
+# Data visualisation
+library(ggplot2)
+library(dplyr)
 
-#What are the determinants of RE generation in EU countries?
+#selecting data for wind
+re_data1 <- re_data1[order(re_data1$year,re_data1$wind_gen),] #arranging data
+countries10 <- tail(re_data1,10)[1] %>% as.matrix() %>% as.character() %>% paste(collapse = "|") #finding top10
+re_wind_top10  <- filter(re_data, grepl(countries10, country)) #selecting top 10 countries by generation 
 
-## Variables, Sources and Model
+#create graph of Wind Generation
+Colours <- c('#543005','#8c510a','#bf812d','#dfc27d','#f6e8c3','#c7eae5','#80cdc1',
+             '#35978f','#01665e','#003c30') # assigning colour pallette
+
+ggplot(data = na.omit(re_wind_top10)) + 
+  aes(x = year, y = wind_gen, group = country, fill = country) +
+  geom_area(position = "stack") + 
+  scale_color_manual(values = Colours) +
+  xlab("\nYear") +
+  ylab("Wind Energy Generation(TWh)\n") +
+  ggtitle("Wind Energy Generation in ten largest wind energy markets in Europe\n") +
+  theme_bw(base_size = 10)
+
+rm(list = c("re_wind_top10", "countries10"))
+```
+
+##RE generation increased substantially over the last decade (2)
+
+```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE, fig.width = 6, fig.height = 4}
+
+#selecting data for solar
+re_data1 <- re_data1[order(re_data1$year,re_data1$solar_gen),] #arranging data
+countries10 <- tail(re_data1,10)[1] %>% as.matrix() %>% as.character() %>% paste(collapse = "|") #finding top10
+re_solar_top10  <- filter(re_data, grepl(countries10, country)) #selecting top 10 countries by generation 
+
+#create graph of Solar Generation
+ggplot(data = na.omit(re_solar_top10)) + 
+  aes(x = year, y = solar_gen, group = country, fill = country) +
+  geom_area(position = "stack") + 
+  scale_color_manual(values = Colours) +
+  xlab("\nYear") +
+  ylab("Solar Energy Generation (TWh)\n") +
+  ggtitle("Solar Energy Generation in ten largest solar energy markets in Europe\n") +
+  theme_bw(base_size = 10)
+
+rm(list = c("re_solar_top10", "countries10","p","countries","Colours"))
+```
+
+## Our Analysis (1)  
+
+### Research Question:
+
+## What are the determinants of renewable energy in EU countries?
+
+## Our Analysis (2)
+
+### Data and Model:
+
+- Data for 28 EU-countries (2005-2013)
+- Fixed effects panel regression
+
+### Dependent Variable:
+
+#### Percentage of total energy consumption coming from solar and wind (%)
+
+## Our Analysis (3)
 
 ### Independent variables:
-- GDP per Capita and Net Energy Imports (WDI)
-- Innovation in RE and long-term interest rates (Eurostat)
-- Crude oil prices (OPEC)
+- GDP per Capita ('000 USD)
+- Net Energy Imports as a percentage of total energy consumption (%)
+- Number of patents filed in RE technologies   
+- Long-term interest rates (%, 10 Year Bond Yield)
+- Crude oil prices (USD)
 
-### Model:
-- Panel Data with 28 EU-countries (2005-2013)
+## Model Results 
 
-# Oil Prices in RE
+```{r, include=F, message=F, warning=FALSE, error=FALSE, echo=FALSE}
 
-```{r, include=F, message=F, warning=FALSE, error=FALSE, echo=FALSE, eval=FALSE}
+library(plm) #for panel data
+library(ggplot2) #for graphs using ggplot
+
+# estimate pooled OLS model
+m.pols  <- plm(sw_pc_elec  ~ log(GDP_capita) + netenergy_imports + interest_rate +  oil_price + poly(patents,3), data= re_data1, index=c("country", "year"), model="pooling")
+summary(m.pols)
+
+#re_data2 <- re_data1[-which(re_data1$country == "Luxembourg"),]
+
+# estimate panel fixed effects 
+m.fe  <- plm(sw_pc_elec ~ log(GDP_capita) + netenergy_imports  + interest_rate +  oil_price + patents, data= re_data1, index=c("country", "year"), model="within")
+summary(m.fe)
+
+#re_data2 <- re_data1[-which(re_data1$country == "Luxembourg"),]
+#m.fe1  <- plm(re_gen  ~ log(GDP_capita) + netenergy_imports  + interest_rate +  oil_price + poly(patents,3), data= re_data2, index=c("country", "year"), model="within")
+#summary(m.fe1)
+
+```
+
+```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE}
+
+library(sjPlot)
+library(sjmisc)
+
+# graphs for presentation
+sjp.lm(m.fe, title = "", theme_bw()) # plotting coeffificents on graph
+
+```
+
+
+
+```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE, eval=FALSE, eval=FALSE}
 library(plm)
 m.fe.i  <- plm(sw_pc_elec ~ oil_price*netenergy_imports + log(GDP_capita) + patents + interest_rate, data= re_data1, index=c("country", "year"), model="within")
 summary(m.fe.i)
@@ -97,7 +189,26 @@ ggplot(data = margins, aes(x = netenergy_imports, y = me, ymin = lwr, ymax = upr
 
 # GDP per Capita 
 
+Fixed Effects Explanation 
+```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE, eval= FALSE}
 
+country_effect <- data.frame(summary(fixef(m.fe))[,1],summary(fixef(m.fe))[,4]) 
+country_effect$country <- rownames(country_effect)
+names(country_effect)[1] <- "intercept"
+names(country_effect)[2] <- "pvalue"
+country_effect$prop_intercept <- country_effect$intercept/min(country_effect$intercept)
 
+#calculating FE of each country relative to min
+country_effect <- arrange(country_effect,prop_intercept)
+countries10 <- tail(country_effect,10)[3] %>% as.matrix() %>% as.character() %>% paste(collapse = "|") #finding top10
+country_effect10  <- filter(country_effect, grepl(countries10, country)) #selecting top 10 countries by fixed effect 
+
+# graphing relative FE
+ggplot(data = country_effect10) + aes(country,prop_intercept) + geom_bar(stat = "identity") + coord_cartesian(ylim = c(1,1.75)) +  xlab("\n Country") +
+  ylab(" ") +
+  ggtitle("Proportionate Country Effect relative to minimum\n") +
+  theme_bw(base_size = 10) 
+
+```
 
 # Overall Results and Conclusion

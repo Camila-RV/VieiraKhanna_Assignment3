@@ -83,6 +83,7 @@ margins <- data.frame(
 margins$lwr <- margins$me - 1.96 * margins$se
 margins$upr <- margins$me + 1.96 * margins$se
 
+library(ggplot2)
 ggplot(data = margins, aes(x = netenergy_imports, y = me, ymin = lwr, ymax = upr)) +
   geom_ribbon(fill = 'blue', alpha = 0.2) + 
   geom_line(colour = "red", size =1) + theme_bw() + 
@@ -95,10 +96,6 @@ ggplot(data = margins, aes(x = netenergy_imports, y = me, ymin = lwr, ymax = upr
 
 # GDP per Capita 
 
-```{r, include=F, message=F, warning=FALSE, error=FALSE, echo=FALSE}
-library(stargazer)  
-stargazer(m.pols, m.fe, df = FALSE, dep.var.labels = "Renewable Energy", covariate.labels = c('GDP per capita (constant 2000 US$)', 'Energy Imports (% of total energy)','Interest Rate', 'Oil Price'), notes = '(1) pooled OLS (2) Fixed effects', header = F, float = F, out = "reg.html")
-```
 
 Fixed Effects Explanation 
 ```{r, include=F, message=F, warning=FALSE, error=FALSE, echo=FALSE}
