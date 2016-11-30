@@ -99,7 +99,7 @@ rm(list = c("re_solar_top10", "countries10","p","countries","Colours"))
 
 ### Research Question:
 
-#### What are the determinants of renewable energy in EU countries?
+What are the determinants of renewable energy in EU countries?
 
 ## Our Analysis (2)
 
@@ -146,7 +146,7 @@ summary(m.fe)
 
 ```
 
-```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE}
+```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE, fig.width = 6, fig.height = 4}
 
 library(sjPlot)
 library(sjmisc)
@@ -156,37 +156,7 @@ sjp.lm(m.fe, title = "", theme_bw()) # plotting coeffificents on graph
 
 ```
 
-
-```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE, eval=FALSE, eval=FALSE}
-library(plm)
-m.fe.i  <- plm(sw_pc_elec ~ oil_price*netenergy_imports + log(GDP_capita) + patents + interest_rate, data= re_data1, index=c("country", "year"), model="within")
-summary(m.fe.i)
-
-vcov(m.fe.i) #variance covariance matrix
-
-vb1 <- vcov(m.fe.i)[1]
-vb3 <- vcov(m.fe.i)[6,6]
-cvb1b3 <- vcov(m.fe.i)[1,6]
-margins <- data.frame(
-  netenergy_imports = min(re_data1$netenergy_imports, na.rm =T):max(re_data1$netenergy_imports, na.rm =T),
-  me = coef(m.fe.i)[1] + coef(m.fe.i)[6] * ( 
-  min(re_data1$netenergy_imports, na.rm =T):max(re_data1$netenergy_imports, na.rm =T)),
-  se = sqrt(vb1 + (min(re_data1$netenergy_imports, na.rm =T):max(re_data1$netenergy_imports, na.rm =T))^2 * vb3 + 2 *(min(re_data1$netenergy_imports, na.rm =T):max(re_data1$netenergy_imports, na.rm =T)) * cvb1b3)
-)
-margins$lwr <- margins$me - 1.96 * margins$se
-margins$upr <- margins$me + 1.96 * margins$se
-
-library(ggplot2)
-
-ggplot(data = margins, aes(x = netenergy_imports, y = me, ymin = lwr, ymax = upr)) +
-  geom_ribbon(fill = 'blue', alpha = 0.2) + 
-  geom_line(colour = "red", size =1) + theme_bw() + 
-  geom_hline(yintercept = 0, linetype = 'dashed') + 
-  xlab("\nEnergy Imports (% of consumption)") + 
-  ylab("Marginal Effect of Oil Price\n") +
-  ggtitle("Marginal Effect of Oil Price conditioned over Import Intensity of Energy\n") +
-  theme(panel.background = element_rect(fill = 'white', colour = 'black'))
-```
+_** (1) logged GDP has a statistically significant negative coefficient (2) the model has adjusted R2 = 43%_
 
 ## Effect of Oil Prices
 
@@ -211,9 +181,10 @@ margins <- data.frame(
 margins$lwr <- margins$me - 1.96 * margins$se
 margins$upr <- margins$me + 1.96 * margins$se
 ```
+
 #### Marginal Effect of Oil Price Conditioned Over Import Intensity of Energy
 
-```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE}
+```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE, fig.width = 6, fig.height = 4}
 ggplot(data = margins, aes(x = netenergy_imports, y = me, ymin = lwr, ymax = upr)) +
   geom_ribbon(fill = 'blue', alpha = 0.2) + 
   geom_line(colour = "red", size =1) + theme_bw() + 
@@ -225,9 +196,9 @@ ggplot(data = margins, aes(x = netenergy_imports, y = me, ymin = lwr, ymax = upr
 
 ```
 
+## Country Specific Effects 
 
-
-```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE, eval= FALSE}
+```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE, eval= T}
 
 country_effect <- data.frame(summary(fixef(m.fe))[,1],summary(fixef(m.fe))[,4]) 
 country_effect$country <- rownames(country_effect)
@@ -241,12 +212,21 @@ countries10 <- tail(country_effect,10)[3] %>% as.matrix() %>% as.character() %>%
 country_effect10  <- filter(country_effect, grepl(countries10, country)) #selecting top 10 countries by fixed effect 
 
 # graphing relative FE
-ggplot(data = country_effect10) + aes(country,prop_intercept) + geom_bar(stat = "identity") + coord_cartesian(ylim = c(1,1.75)) +  xlab("\n Country") +
+ggplot(data = country_effect10) + 
+  aes(country, prop_intercept) + 
+  geom_bar(stat = "identity") + 
+  coord_cartesian(ylim = c(1,1.75)) +  
+  xlab("\n Country") +
   ylab(" ") +
   ggtitle("Proportionate Country Effect relative to minimum\n") +
   theme_bw(base_size = 10) 
-
 ```
-## Fixed Effects
+
+Country specific effects are statistically significant
+
 ## Overall Results and Conclusion
 
+- Renewable energy uptake varies significantly across EU countries 
+- The increase in cost of conventional energy seems to be an important factor in explaining 
+RE development
+- Country specific conditions including RE development policy, geography some of the difference in variation in renewable energy penetration. More work needs to be disentangle the effect of policy.  
