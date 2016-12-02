@@ -262,6 +262,9 @@ summary(m.pols)
 m.fe  <- plm(sw_pc_elec ~ log(GDP_capita) + netenergy_imports  + interest_rate +  oil_price + patents, data= re_data1, index=c("country", "year"), model="within")
 summary(m.fe)
 
+m.lsdv <- lm(sw_pc_elec ~ log(GDP_capita) + netenergy_imports  + interest_rate +  oil_price + patents + as.factor(country), data= re_data1)
+summary(m.lsdv)
+
 #re_data2 <- re_data1[-which(re_data1$country == "Luxembourg"),]
 #m.fe1  <- plm(re_gen  ~ log(GDP_capita) + netenergy_imports  + interest_rate +  oil_price + poly(patents,3), data= re_data2, index=c("country", "year"), model="within")
 #summary(m.fe1)
@@ -270,9 +273,22 @@ library(sjPlot)
 library(sjmisc)
 
 # graphs for presentation
-sjp.lm(m.fe) # plotting coeffificents on graph
-sjp.lm(m.pols, type = "poly", poly.term = 'patents') # poltting the polynomial variables
+sjp.lm(m.fe, theme_bw()) # plotting coeffificents on graph
+sjp.lm(m.pols, type = "poly", poly.term = 'patents', theme_bw(base_size = 10) # poltting the polynomial variables
 
+# Explaining why GDP per Capita does not work
+
+re_data1 <- re_data1[order(re_data1$year,re_data1$sw_pc_elec),] #arranging data
+countries10 <- tail(re_data1,10)[1] %>% as.matrix() %>% as.character() %>% paste(collapse = "|") #finding 
+top10sw_pc_elec_top10  <- filter(re_data1, grepl(countries10, country)) #selecting top 10 countries by generation 
+
+ggplot(data = re_wind_top10) + 
+  aes(x = year, y = GDP_capita, colour = country, group = country ) +
+  geom_line() + 
+  xlab("\nYear") +
+  ylab("GDP per capita ('000 USD\n") +
+  ggtitle("GDP per capita declined in several countries b/w 2005 and 2013\n") +
+  theme_bw(base_size = 10)       
 
 ```
 

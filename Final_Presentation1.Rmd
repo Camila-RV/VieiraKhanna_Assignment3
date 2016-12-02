@@ -10,7 +10,7 @@ smaller: true
 
 ---
 
-## Proportion of electricity consumption from wind and solar in Europe
+## Solar and Wind energy penetration in Europe
 
 ```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE, type = 'html', results='asis'}
 
@@ -30,10 +30,11 @@ re_data1 <- na.omit(re_data)
 
 #creating var for solar and wind gen as percent of total elec consumption
 re_data1$sw_pc_elec <- re_data1$re_gen/re_data1$elec_total*100 
+re_data_map <- re_data1[which(re_data1$year == "2013"),]
 
 library(googleVis)
 # Plot
-re_map <- gvisGeoChart(re_data1, locationvar = 'country',
+re_map <- gvisGeoChart(re_data_map, locationvar = 'country',
                       colorvar = 'sw_pc_elec',
                       options = list(
                         colors = "['#f7fcb9', '#31a354']",
@@ -44,7 +45,9 @@ print(re_map, tag = 'chart')
 
 ```
 
-## RE generation increased substantially over the last decade (1)
+The map shows the proportion of total electricity consumption attributable to wind and solar in Europe in 2013
+
+## Trends in Wind Electricity Generation 
 
 ```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE, fig.width = 6, fig.height = 4}
 
@@ -73,7 +76,10 @@ ggplot(data = na.omit(re_wind_top10)) +
 rm(list = c("re_wind_top10", "countries10"))
 ```
 
-##RE generation increased substantially over the last decade (2)
+- Wind energy generation in top 10 markets quadrupled 
+- Germany, Spain and UK are the largest markets by size for wind
+
+## Trends in Solar Electricity Generation
 
 ```{r, include=T, message=F, warning=FALSE, error=FALSE, echo=FALSE, fig.width = 6, fig.height = 4}
 
@@ -95,24 +101,20 @@ ggplot(data = na.omit(re_solar_top10)) +
 rm(list = c("re_solar_top10", "countries10","p","countries","Colours"))
 ```
 
-## Our Analysis (1)  
+- Meteoric growth in solar energy generation
+- Largest markets for solar energy are Germany, Spain and Italy
 
-### Research Question:
+## Our Research Question  
 
-What are the determinants of renewable energy in EU countries?
+__What are the determinants of renewable energy in EU countries?__  
+<span style="color:white">.</span>  
+We try to answer this question using data for 28 EU-countries (2005-2013). Our data was sourced from Eurostat, The World Bank and OPEC and is also available on our GitHub repository.
 
-## Our Analysis (2)
-
-### Data and Model:
-
-- Data for 28 EU-countries (2005-2013)
-- Fixed effects panel regression
+## Our Analysis
 
 ### Dependent Variable:
 
-#### Percentage of total energy consumption coming from solar and wind (%)
-
-## Our Analysis (3)
+Percentage of total energy consumption coming from solar and wind (sw pc elec)
 
 ### Independent variables:
 - GDP per Capita ('000 USD)
@@ -121,9 +123,13 @@ What are the determinants of renewable energy in EU countries?
 - Long-term interest rates (%, 10 Year Bond Yield)
 - Crude oil prices (USD)
 
-## Regression results
+## Model
+- We estimate the model: $sw pc elec = \alpha + \beta1*GDP capita + \beta2*net energy imports$   
+$+ \beta3*interest rates + \beta4*oil_price + \beta5*patents$
+- Different model specifications: pooled ordinary least squares, fixed effects model, random effects model
+- The Hausman test indicates presence of panel specific effects 
 
-### Estimates of the independent variables
+## Regression results
 
 ```{r, include=F, message=F, warning=FALSE, error=FALSE, echo=FALSE}
 
@@ -229,4 +235,5 @@ Country specific effects are statistically significant
 - Renewable energy uptake varies significantly across EU countries 
 - The increase in cost of conventional energy seems to be an important factor in explaining 
 RE development
-- Country specific conditions including RE development policy, geography some of the difference in variation in renewable energy penetration. More work needs to be disentangle the effect of policy.  
+- Country specific conditions including renewable energy development policy, geography plays an important role
+- Next steps: disentangle the effect of policy from country specific effects  
